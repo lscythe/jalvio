@@ -1,0 +1,21 @@
+[tools]
+java = "temurin-25"
+hk = "2.9.0"
+"github:ZacSweers/kempt" = "0.4.0"
+python = "3.15.2"
+
+[tasks.format]
+description = "Format sources with kempt"
+run = "kempt format"
+
+[tasks.check]
+description = "Run the static checks"
+run = "./gradlew checkModuleBoundaries"
+
+[tasks.test]
+description = "Run the unit tests"
+run = "./gradlew testAndroidHostTest"
+
+[tasks.screenshots]
+description = "Record the screenshot baselines"
+run = "./gradlew recordRoborazziAndroidHostTest"
