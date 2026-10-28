@@ -18,4 +18,8 @@ plugins {
     alias(libs.plugins.jalvio.metro)
 }
 
-kotlin { android { namespace = "dev.lscythe.app.jalvio.core.common" } }
+kotlin {
+    android { namespace = "dev.lscythe.app.jalvio.core.common" }
+
+    sourceSets { commonMain.dependencies { api(libs.kotlinx.coroutines.core) } }
+}
