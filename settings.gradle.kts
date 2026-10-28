@@ -54,6 +54,7 @@ include(
     ":core:resources",
     ":core:testing",
     ":core:testing-screenshot",
+    ":core:ui",
 )
 
 check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_25)) {
