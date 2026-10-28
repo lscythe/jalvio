@@ -67,6 +67,10 @@ gradlePlugin {
             implementationClass =
                 "dev.lscythe.app.jalvio.convention.ModuleBoundariesConventionPlugin"
         }
+        register("endpoints") {
+            id = "jalvio.endpoints"
+            implementationClass = "dev.lscythe.app.jalvio.convention.EndpointsConventionPlugin"
+        }
         register("metro") {
             id = "jalvio.metro"
             implementationClass = "dev.lscythe.app.jalvio.convention.MetroConventionPlugin"
