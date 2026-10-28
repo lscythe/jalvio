@@ -46,6 +46,8 @@ include(":app:android")
 
 include(":core:common")
 
+include(":core:network")
+
 include(":core:testing")
 
 check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_25)) {

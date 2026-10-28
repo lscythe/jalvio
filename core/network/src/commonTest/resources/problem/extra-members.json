@@ -1,0 +1,8 @@
+{
+  "type": "https://jalvio.app/problems/validation",
+  "title": "Invalid request",
+  "status": 400,
+  "detail": "Field is missing",
+  "retryAfterSeconds": 30,
+  "errors": [{"field": "name"}]
+}
