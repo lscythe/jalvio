@@ -28,6 +28,17 @@ import org.gradle.kotlin.dsl.configure
 class AndroidApplicationFlavorsConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.pluginManager.withPlugin("com.android.application") { target.configureFlavors() }
+        target.pluginManager.withPlugin("com.google.gms.google-services") {
+            target.disableGoogleServicesOutsidePlaystore()
+        }
+    }
+
+    private fun Project.disableGoogleServicesOutsidePlaystore() {
+        val playstoreTaskPrefix =
+            "process" + JalvioDistribution.Playstore.flavorName.replaceFirstChar(Char::uppercase)
+        tasks
+            .named { it.endsWith("GoogleServices") && !it.startsWith(playstoreTaskPrefix) }
+            .configureEach { enabled = false }
     }
 
     private fun Project.configureFlavors() {
@@ -42,8 +53,10 @@ class AndroidApplicationFlavorsConventionPlugin : Plugin<Project> {
             }
         }
 
-        val fossClasspathCoordinates =
-            configurations.named("fossReleaseRuntimeClasspath").flatMap { classpath ->
+        val fossClasspathCoordinates = provider {
+            configurations.getByName("fossReleaseRuntimeClasspath")
+        }
+            .flatMap { classpath ->
                 classpath.incoming.resolutionResult.rootComponent.map { root ->
                     root.moduleCoordinates()
                 }
