@@ -53,6 +53,8 @@ include(
     ":core:designsystem",
     ":core:location",
     ":core:map",
+    ":core:monitoring",
+    ":core:monitoring-sentry",
     ":core:navigation",
     ":core:network",
     ":core:permissions",
