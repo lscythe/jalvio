@@ -46,6 +46,8 @@ include(":app:android")
 
 include(":core:common")
 
+include(":core:testing")
+
 check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_25)) {
     """
     Jalvio requires JDK 25+ but it is currently using JDK ${JavaVersion.current()}.

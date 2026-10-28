@@ -17,11 +17,16 @@ package dev.lscythe.app.jalvio.convention
 
 import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import org.gradle.api.Project
+import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 internal fun Project.configureMultiplatformLibrary() {
     extensions.configure<KotlinMultiplatformExtension> {
@@ -51,6 +56,28 @@ internal fun Project.configureMultiplatformLibrary() {
     }
 
     tasks.withType<Test>().configureEach { useJUnitPlatform() }
+
+    configureIosTestResources()
+}
+
+private fun Project.configureIosTestResources() {
+    extensions.configure<KotlinMultiplatformExtension> {
+        targets.withType<KotlinNativeTarget>().configureEach {
+            val targetName = name
+            val testExecutable = binaries.getTest(NativeBuildType.DEBUG)
+            val copyTestResources =
+                tasks.register<Copy>(
+                    "copy${targetName.replaceFirstChar(Char::uppercase)}TestResources"
+                ) {
+                    from(layout.projectDirectory.dir("src/commonTest/resources"))
+                    into(testExecutable.outputDirectory)
+                    dependsOn(testExecutable.linkTaskProvider)
+                }
+            tasks.withType<KotlinNativeTest>().configureEach {
+                if (name == "${targetName}Test") dependsOn(copyTestResources)
+            }
+        }
+    }
 }
 
 private fun Project.warningsAsErrors() =
