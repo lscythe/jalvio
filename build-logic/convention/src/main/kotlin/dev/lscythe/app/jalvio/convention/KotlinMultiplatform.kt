@@ -80,5 +80,5 @@ private fun Project.configureIosTestResources() {
     }
 }
 
-private fun Project.warningsAsErrors() =
+internal fun Project.warningsAsErrors() =
     providers.gradleProperty("warningsAsErrors").map(String::toBoolean).orElse(false)

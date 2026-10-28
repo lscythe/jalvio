@@ -121,6 +121,7 @@ room3 = { id = "androidx.room3", version.ref = "room3" }
 
 jalvio-android-application = { id = "jalvio.android.application" }
 jalvio-android-application-flavors = { id = "jalvio.android.application.flavors" }
+jalvio-ios-application = { id = "jalvio.ios.application" }
 jalvio-endpoints = { id = "jalvio.endpoints" }
 jalvio-metro = { id = "jalvio.metro" }
 jalvio-module-boundaries = { id = "jalvio.module.boundaries" }

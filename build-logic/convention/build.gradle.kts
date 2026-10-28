@@ -92,6 +92,10 @@ gradlePlugin {
             implementationClass =
                 "dev.lscythe.app.jalvio.convention.AndroidApplicationFlavorsConventionPlugin"
         }
+        register("iosApplication") {
+            id = "jalvio.ios.application"
+            implementationClass = "dev.lscythe.app.jalvio.convention.IosApplicationConventionPlugin"
+        }
         register("metro") {
             id = "jalvio.metro"
             implementationClass = "dev.lscythe.app.jalvio.convention.MetroConventionPlugin"
