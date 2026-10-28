@@ -14,37 +14,42 @@
  * limitations under the License.
  */
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.jalvio.android.application)
+    alias(libs.plugins.jalvio.android.application.flavors)
+    alias(libs.plugins.jalvio.metro)
+    alias(libs.plugins.jalvio.robolectric)
+    alias(libs.plugins.gms)
 }
+
+val sentryDsn = providers.gradleProperty("sentryDsn").orElse("")
 
 android {
     namespace = "dev.lscythe.app.jalvio"
-    compileSdk {
-        version = release(37)
-    }
 
     defaultConfig {
         applicationId = "dev.lscythe.app.jalvio"
-        minSdk = 28
-        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
+        buildConfigField("String", "SENTRY_DSN", "\"${sentryDsn.get()}\"")
     }
 
-    buildTypes {
-        release {
-            optimization {
-                enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
-            }
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_25
-        targetCompatibility = JavaVersion.VERSION_25
-    }
+    buildFeatures { buildConfig = true }
 }
 
 dependencies {
+    implementation(project(":app:shared"))
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
+
+    "playstoreImplementation"(project(":core:analytics-firebase"))
+    "playstoreImplementation"(project(":core:monitoring-sentry"))
+    "fossFullImplementation"(project(":core:monitoring-sentry"))
+
+    testImplementation(libs.kotest.assertions.core)
+}
+
+dependencyGuard {
+    configuration("playstoreReleaseRuntimeClasspath")
+    configuration("fossFullReleaseRuntimeClasspath")
+    configuration("fossReleaseRuntimeClasspath")
 }
