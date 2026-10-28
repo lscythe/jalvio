@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -42,6 +43,8 @@ dependencyResolutionManagement {
 rootProject.name = "Jalvio"
 
 include(":app:android")
+
+include(":core:common")
 
 check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_25)) {
     """

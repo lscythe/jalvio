@@ -95,6 +95,7 @@ compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kover-gradlePlugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
 ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+metro-gradlePlugin = { module = "dev.zacsweers.metro:gradle-plugin", version.ref = "metro" }
 room3-gradlePlugin = { module = "androidx.room3:androidx.room3.gradle.plugin", version.ref = "room3" }
 
 [plugins]
@@ -112,3 +113,8 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 room3 = { id = "androidx.room3", version.ref = "room3" }
+
+jalvio-metro = { id = "jalvio.metro" }
+jalvio-multiplatform-library = { id = "jalvio.multiplatform.library" }
+jalvio-multiplatform-library-compose = { id = "jalvio.multiplatform.library.compose" }
+jalvio-root = { id = "jalvio.root" }
