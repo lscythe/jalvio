@@ -33,7 +33,7 @@ type(scope): summary
 ```
 
 - **Types:** `feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `build`, `ci`, `chore`, `revert`. Add `!` after the scope for a breaking change.
-- **Scope:** a Gradle module path such as `core:common` or `feature:home:impl`, a module group such as `feature:home`, or one of the areas `build`, `build-logic`, `ci`, `deps`, `tooling`, `docs`, `release`. The scope is optional for `ci` and `docs`.
+- **Scope:** a Gradle module path such as `core:common` or `feature:home:impl`, a module group such as `feature:home` or `core` (for a change across a whole directory), or one of the areas `build`, `build-logic`, `ci`, `deps`, `tooling`, `docs`, `release`. The scope is optional for `ci` and `docs`.
 - **Summary:** imperative, starts with a lowercase letter, no trailing period. The whole header is at most 72 characters.
 
 Examples:

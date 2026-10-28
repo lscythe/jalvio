@@ -26,13 +26,21 @@ class AllowedScopesTest(unittest.TestCase):
         ]:
             self.assertIn(s, scopes)
 
-    def test_single_segment_groups_are_not_allowed(self):
-        self.assertNotIn("feature", allowed_scopes(SETTINGS))
+    def test_top_level_directories_with_modules_are_allowed(self):
+        scopes = allowed_scopes(SETTINGS)
+        for s in ["core", "feature", "app"]:
+            self.assertIn(s, scopes)
+
+    def test_top_level_directories_without_modules_are_not_allowed(self):
+        self.assertNotIn("data", allowed_scopes(SETTINGS))
 
 
 class CheckMessageTest(unittest.TestCase):
     def test_valid_scope_passes(self):
         self.assertIsNone(check_message("feat(core:network): add problem decoding", allowed_scopes(SETTINGS)))
+
+    def test_top_level_scope_passes(self):
+        self.assertIsNone(check_message("feat(core): add the core modules", allowed_scopes(SETTINGS)))
 
     def test_breaking_marker_passes(self):
         self.assertIsNone(check_message("feat(core:network)!: drop v0 client", allowed_scopes(SETTINGS)))
