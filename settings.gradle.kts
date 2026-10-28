@@ -44,15 +44,7 @@ rootProject.name = "Jalvio"
 
 include(":app:android")
 
-include(":core:common")
-
-include(":core:database")
-
-include(":core:datastore")
-
-include(":core:network")
-
-include(":core:testing")
+include(":core:common", ":core:database", ":core:datastore", ":core:network", ":core:testing")
 
 check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_25)) {
     """
