@@ -122,5 +122,6 @@ jalvio-metro = { id = "jalvio.metro" }
 jalvio-module-boundaries = { id = "jalvio.module.boundaries" }
 jalvio-multiplatform-library = { id = "jalvio.multiplatform.library" }
 jalvio-multiplatform-library-compose = { id = "jalvio.multiplatform.library.compose" }
+jalvio-robolectric = { id = "jalvio.robolectric" }
 jalvio-room = { id = "jalvio.room" }
 jalvio-root = { id = "jalvio.root" }

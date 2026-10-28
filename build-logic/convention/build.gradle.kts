@@ -86,6 +86,10 @@ gradlePlugin {
             id = "jalvio.metro"
             implementationClass = "dev.lscythe.app.jalvio.convention.MetroConventionPlugin"
         }
+        register("robolectric") {
+            id = "jalvio.robolectric"
+            implementationClass = "dev.lscythe.app.jalvio.convention.RobolectricConventionPlugin"
+        }
         register("room") {
             id = "jalvio.room"
             implementationClass = "dev.lscythe.app.jalvio.convention.RoomConventionPlugin"
