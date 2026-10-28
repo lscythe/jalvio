@@ -1,8 +1,11 @@
+import tempfile
 import unittest
+from pathlib import Path
+from unittest import mock
 
-from commit_scope import allowed_scopes, check_message
+from commit_scope import allowed_scopes, check_message, first_message_line
 
-SETTINGS = 'include(":core:network", ":feature:home:api", ":feature:home:impl", ":app:android")'
+SETTINGS = 'include(":core:network", ":core:common", ":feature:home:api", ":feature:home:impl", ":app:android")'
 
 
 class AllowedScopesTest(unittest.TestCase):
@@ -55,6 +58,46 @@ class CheckMessageTest(unittest.TestCase):
             "squash! feat(core:network): x",
         ]:
             self.assertIsNone(check_message(m, allowed_scopes(SETTINGS)))
+
+    def test_amend_prefix_passes(self):
+        self.assertIsNone(check_message("amend! feat(core:common): x", allowed_scopes(SETTINGS)))
+
+    def test_colon_scope_passes(self):
+        self.assertIsNone(check_message("feat(core:common): add dispatchers", allowed_scopes(SETTINGS)))
+
+    def test_colon_scope_with_breaking_marker_passes(self):
+        self.assertIsNone(check_message("feat(feature:home:impl)!: drop legacy entry", allowed_scopes(SETTINGS)))
+
+    def test_unknown_type_fails_naming_it(self):
+        self.assertIn("feature", check_message("feature(core:common): x", allowed_scopes(SETTINGS)))
+
+    def test_uppercase_summary_fails(self):
+        self.assertIsNotNone(check_message("feat(core:common): Add dispatchers", allowed_scopes(SETTINGS)))
+
+    def test_trailing_period_fails(self):
+        self.assertIsNotNone(check_message("feat(core:common): add dispatchers.", allowed_scopes(SETTINGS)))
+
+    def test_missing_space_after_colon_fails(self):
+        self.assertIsNotNone(check_message("feat(core:common):add dispatchers", allowed_scopes(SETTINGS)))
+
+    def test_empty_summary_fails(self):
+        self.assertIsNotNone(check_message("feat(core:common): ", allowed_scopes(SETTINGS)))
+
+    def test_header_length_limit_is_72(self):
+        prefix = "feat(core:common): "
+        at_limit = prefix + "a" * (72 - len(prefix))
+        self.assertEqual(72, len(at_limit))
+        self.assertIsNone(check_message(at_limit, allowed_scopes(SETTINGS)))
+        self.assertIsNotNone(check_message(at_limit + "a", allowed_scopes(SETTINGS)))
+
+
+class FirstMessageLineTest(unittest.TestCase):
+    def test_file_is_read_as_utf_8(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "COMMIT_EDITMSG"
+            path.write_text("# café comment\nfeat(core:common): add dispatchers\n", encoding="utf-8")
+            with mock.patch("io.text_encoding", side_effect=lambda encoding, stacklevel=2: encoding or "ascii"):
+                self.assertEqual("feat(core:common): add dispatchers", first_message_line(str(path)))
 
 
 if __name__ == "__main__":
