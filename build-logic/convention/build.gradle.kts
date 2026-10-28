@@ -35,6 +35,7 @@ dependencies {
     compileOnly(libs.kover.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.metro.gradlePlugin)
+    compileOnly(libs.room3.gradlePlugin)
 
     testImplementation(gradleTestKit())
     testImplementation(libs.kotest.assertions.core)
@@ -84,6 +85,10 @@ gradlePlugin {
         register("metro") {
             id = "jalvio.metro"
             implementationClass = "dev.lscythe.app.jalvio.convention.MetroConventionPlugin"
+        }
+        register("room") {
+            id = "jalvio.room"
+            implementationClass = "dev.lscythe.app.jalvio.convention.RoomConventionPlugin"
         }
         register("root") {
             id = "jalvio.root"
