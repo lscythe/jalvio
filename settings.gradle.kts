@@ -51,6 +51,7 @@ include(
     ":core:location",
     ":core:network",
     ":core:permissions",
+    ":core:resources",
     ":core:testing",
 )
 
