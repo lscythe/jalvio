@@ -24,6 +24,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             api(libs.compose.multiplatform.runtime)
+            implementation(project(":core:designsystem"))
             implementation(libs.compose.multiplatform.material3)
             implementation(libs.roborazzi.compose)
         }

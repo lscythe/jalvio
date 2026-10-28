@@ -15,23 +15,15 @@
  */
 package dev.lscythe.app.jalvio.core.testing.screenshot
 
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.runtime.Composable
 import com.github.takahirom.roborazzi.captureRoboImage
+import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioTheme
 
 private const val SCREENSHOT_DIRECTORY = "src/androidHostTest/screenshots"
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 fun captureScreenshot(name: String, darkTheme: Boolean = false, content: @Composable () -> Unit) {
     captureRoboImage(filePath = "$SCREENSHOT_DIRECTORY/$name.png") {
-        MaterialExpressiveTheme(
-            colorScheme = if (darkTheme) darkColorScheme() else expressiveLightColorScheme()
-        ) {
-            Surface(content = content)
-        }
+        JalvioTheme(darkTheme = darkTheme) { Surface(content = content) }
     }
 }
