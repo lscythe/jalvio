@@ -48,6 +48,7 @@ include(
     ":core:common",
     ":core:database",
     ":core:datastore",
+    ":core:designsystem",
     ":core:location",
     ":core:network",
     ":core:permissions",
