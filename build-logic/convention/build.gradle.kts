@@ -58,6 +58,16 @@ gradlePlugin {
             implementationClass =
                 "dev.lscythe.app.jalvio.convention.KotlinMultiplatformLibraryConventionPlugin"
         }
+        register("multiplatformFeatureApi") {
+            id = "jalvio.multiplatform.feature.api"
+            implementationClass =
+                "dev.lscythe.app.jalvio.convention.KotlinMultiplatformFeatureApiConventionPlugin"
+        }
+        register("multiplatformFeatureImpl") {
+            id = "jalvio.multiplatform.feature.impl"
+            implementationClass =
+                "dev.lscythe.app.jalvio.convention.KotlinMultiplatformFeatureImplConventionPlugin"
+        }
         register("multiplatformLibraryCompose") {
             id = "jalvio.multiplatform.library.compose"
             implementationClass =

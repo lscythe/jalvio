@@ -69,6 +69,7 @@ kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationJson" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -122,6 +123,8 @@ jalvio-android-application-flavors = { id = "jalvio.android.application.flavors"
 jalvio-endpoints = { id = "jalvio.endpoints" }
 jalvio-metro = { id = "jalvio.metro" }
 jalvio-module-boundaries = { id = "jalvio.module.boundaries" }
+jalvio-multiplatform-feature-api = { id = "jalvio.multiplatform.feature.api" }
+jalvio-multiplatform-feature-impl = { id = "jalvio.multiplatform.feature.impl" }
 jalvio-multiplatform-library = { id = "jalvio.multiplatform.library" }
 jalvio-multiplatform-library-compose = { id = "jalvio.multiplatform.library.compose" }
 jalvio-robolectric = { id = "jalvio.robolectric" }
