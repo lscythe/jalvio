@@ -42,7 +42,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Jalvio"
 
-include(":app:android")
+include(":app:android", ":app:shared")
 
 include(
     ":core:analytics",
