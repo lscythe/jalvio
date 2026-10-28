@@ -10,7 +10,7 @@ run = "kempt format"
 
 [tasks.check]
 description = "Run the static checks"
-run = "./gradlew checkModuleBoundaries"
+run = "./gradlew checkModuleBoundaries :core:resources:checkTranslations"
 
 [tasks.test]
 description = "Run the unit tests"

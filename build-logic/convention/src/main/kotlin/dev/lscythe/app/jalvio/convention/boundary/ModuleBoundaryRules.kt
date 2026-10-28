@@ -36,7 +36,7 @@ private val dataCoreModules = setOf("network", "database", "datastore", "locatio
 
 fun boundaryViolations(dependencies: List<ModuleDependency>): List<String> =
     dependencies
-        .filterNot { "Test" in it.configuration }
+        .filterNot { "Test" in it.configuration || it.from == it.to }
         .mapNotNull { dependency ->
             ruleBroken(dependency)?.let {
                 "${dependency.from} -> ${dependency.to} (${dependency.configuration}): $it"

@@ -44,7 +44,25 @@ rootProject.name = "Jalvio"
 
 include(":app:android")
 
-include(":core:common")
+include(
+    ":core:analytics",
+    ":core:analytics-firebase",
+    ":core:common",
+    ":core:database",
+    ":core:datastore",
+    ":core:designsystem",
+    ":core:location",
+    ":core:map",
+    ":core:monitoring",
+    ":core:monitoring-sentry",
+    ":core:navigation",
+    ":core:network",
+    ":core:permissions",
+    ":core:resources",
+    ":core:testing",
+    ":core:testing-screenshot",
+    ":core:ui",
+)
 
 check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_25)) {
     """

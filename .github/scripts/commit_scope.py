@@ -15,7 +15,7 @@ def allowed_scopes(settings_text: str) -> set[str]:
     scopes = set(AREA_SCOPES)
     for path in MODULE_PATH.findall(settings_text):
         segments = path.strip(":").split(":")
-        for depth in range(2, len(segments) + 1):
+        for depth in range(1, len(segments) + 1):
             scopes.add(":".join(segments[:depth]))
     return scopes
 

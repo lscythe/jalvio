@@ -35,6 +35,7 @@ dependencies {
     compileOnly(libs.kover.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.metro.gradlePlugin)
+    compileOnly(libs.room3.gradlePlugin)
 
     testImplementation(gradleTestKit())
     testImplementation(libs.kotest.assertions.core)
@@ -56,6 +57,16 @@ gradlePlugin {
             id = "jalvio.multiplatform.library"
             implementationClass =
                 "dev.lscythe.app.jalvio.convention.KotlinMultiplatformLibraryConventionPlugin"
+        }
+        register("multiplatformFeatureApi") {
+            id = "jalvio.multiplatform.feature.api"
+            implementationClass =
+                "dev.lscythe.app.jalvio.convention.KotlinMultiplatformFeatureApiConventionPlugin"
+        }
+        register("multiplatformFeatureImpl") {
+            id = "jalvio.multiplatform.feature.impl"
+            implementationClass =
+                "dev.lscythe.app.jalvio.convention.KotlinMultiplatformFeatureImplConventionPlugin"
         }
         register("multiplatformLibraryCompose") {
             id = "jalvio.multiplatform.library.compose"
@@ -84,6 +95,14 @@ gradlePlugin {
         register("metro") {
             id = "jalvio.metro"
             implementationClass = "dev.lscythe.app.jalvio.convention.MetroConventionPlugin"
+        }
+        register("robolectric") {
+            id = "jalvio.robolectric"
+            implementationClass = "dev.lscythe.app.jalvio.convention.RobolectricConventionPlugin"
+        }
+        register("room") {
+            id = "jalvio.room"
+            implementationClass = "dev.lscythe.app.jalvio.convention.RoomConventionPlugin"
         }
         register("root") {
             id = "jalvio.root"

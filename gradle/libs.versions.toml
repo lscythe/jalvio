@@ -27,6 +27,7 @@ ksp = "2.3.12"
 ktfmt = "0.64"
 ktor = "3.6.0"
 maplibre = "0.20.0"
+materialKolor = "6.0.0"
 metro = "1.5.0"
 robolectric = "4.17"
 roborazzi = "1.77.0"
@@ -68,6 +69,7 @@ kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationJson" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -79,11 +81,13 @@ ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.re
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 maplibre-compose = { module = "org.maplibre.compose:maplibre-compose", version.ref = "maplibre" }
 maplibre-compose-opengl-runtime = { module = "org.maplibre.compose:maplibre-compose-runtime-opengl-android", version.ref = "maplibre" }
+materialKolor-material3 = { module = "com.materialkolor:material-kolor-material3", version.ref = "materialKolor" }
 metro-android = { module = "dev.zacsweers.metro:metrox-android", version.ref = "metro" }
 metro-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel", version.ref = "metro" }
 metro-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
+roborazzi-compose = { module = "io.github.takahirom.roborazzi:roborazzi-compose", version.ref = "roborazzi" }
 roborazzi-compose-ios = { module = "io.github.takahirom.roborazzi:roborazzi-compose-ios", version.ref = "roborazzi" }
 roborazzi-core = { module = "io.github.takahirom.roborazzi:roborazzi-core", version.ref = "roborazzi" }
 sentry-kmp = { module = "io.sentry:sentry-kotlin-multiplatform", version.ref = "sentryKmp" }
@@ -119,6 +123,10 @@ jalvio-android-application-flavors = { id = "jalvio.android.application.flavors"
 jalvio-endpoints = { id = "jalvio.endpoints" }
 jalvio-metro = { id = "jalvio.metro" }
 jalvio-module-boundaries = { id = "jalvio.module.boundaries" }
+jalvio-multiplatform-feature-api = { id = "jalvio.multiplatform.feature.api" }
+jalvio-multiplatform-feature-impl = { id = "jalvio.multiplatform.feature.impl" }
 jalvio-multiplatform-library = { id = "jalvio.multiplatform.library" }
 jalvio-multiplatform-library-compose = { id = "jalvio.multiplatform.library.compose" }
+jalvio-robolectric = { id = "jalvio.robolectric" }
+jalvio-room = { id = "jalvio.room" }
 jalvio-root = { id = "jalvio.root" }

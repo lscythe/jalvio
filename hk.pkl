@@ -4,6 +4,10 @@ local linters = new Mapping<String, Step> {
     ["kempt"] {
         fix = "kempt hook"
     }
+    ["translations"] {
+        glob = List("core/resources/**/strings.xml")
+        check = "./gradlew :core:resources:checkTranslations"
+    }
 }
 
 hooks {
