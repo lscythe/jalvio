@@ -35,9 +35,15 @@ dependencies {
     compileOnly(libs.kover.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.metro.gradlePlugin)
+
+    testImplementation(gradleTestKit())
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.runner.junit5)
 }
 
 tasks {
+    test { useJUnitPlatform() }
+
     validatePlugins {
         enableStricterValidation = true
         failOnWarning = true
@@ -55,6 +61,11 @@ gradlePlugin {
             id = "jalvio.multiplatform.library.compose"
             implementationClass =
                 "dev.lscythe.app.jalvio.convention.KotlinMultiplatformLibraryComposeConventionPlugin"
+        }
+        register("moduleBoundaries") {
+            id = "jalvio.module.boundaries"
+            implementationClass =
+                "dev.lscythe.app.jalvio.convention.ModuleBoundariesConventionPlugin"
         }
         register("metro") {
             id = "jalvio.metro"

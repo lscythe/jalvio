@@ -23,6 +23,7 @@ class KotlinMultiplatformLibraryConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply("org.jetbrains.kotlin.multiplatform")
             pluginManager.apply("com.android.kotlin.multiplatform.library")
+            pluginManager.apply("jalvio.module.boundaries")
             pluginManager.apply("io.kotest")
             pluginManager.apply("com.google.devtools.ksp")
 
