@@ -71,6 +71,16 @@ gradlePlugin {
             id = "jalvio.endpoints"
             implementationClass = "dev.lscythe.app.jalvio.convention.EndpointsConventionPlugin"
         }
+        register("androidApplication") {
+            id = "jalvio.android.application"
+            implementationClass =
+                "dev.lscythe.app.jalvio.convention.AndroidApplicationConventionPlugin"
+        }
+        register("androidApplicationFlavors") {
+            id = "jalvio.android.application.flavors"
+            implementationClass =
+                "dev.lscythe.app.jalvio.convention.AndroidApplicationFlavorsConventionPlugin"
+        }
         register("metro") {
             id = "jalvio.metro"
             implementationClass = "dev.lscythe.app.jalvio.convention.MetroConventionPlugin"
