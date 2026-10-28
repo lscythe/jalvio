@@ -106,4 +106,15 @@ class ModuleBoundaryRulesTest :
                     .shouldBeEmpty()
             }
         }
+        Given("a module referencing itself, as kover does") {
+            Then("it is not a violation") {
+                boundaryViolations(
+                        listOf(
+                            dep(":feature:home:impl", ":feature:home:impl", "kover"),
+                            dep(":feature:home:api", ":feature:home:api", "kover"),
+                        )
+                    )
+                    .shouldBeEmpty()
+            }
+        }
     })
