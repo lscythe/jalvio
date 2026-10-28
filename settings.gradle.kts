@@ -50,6 +50,7 @@ include(
     ":core:datastore",
     ":core:designsystem",
     ":core:location",
+    ":core:navigation",
     ":core:network",
     ":core:permissions",
     ":core:resources",
