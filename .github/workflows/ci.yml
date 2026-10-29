@@ -109,10 +109,26 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up Gradle
         uses: ./.github/actions/gradle-setup
+      - name: Read Kotlin version
+        id: kotlin
+        run: echo "version=$(sed -nE 's/^kotlin = "(.+)"$/\1/p' gradle/libs.versions.toml)" >> "$GITHUB_OUTPUT"
+      - name: Restore Kotlin/Native caches
+        id: konan
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.konan
+          key: konan-${{ runner.os }}-${{ steps.kotlin.outputs.version }}-${{ hashFiles('gradle/libs.versions.toml') }}
+          restore-keys: konan-${{ runner.os }}-${{ steps.kotlin.outputs.version }}-
       - name: Run iOS simulator tests
         run: mise run test-ios
       - name: Build iOS simulator app
         run: mise run build-ios
+      - name: Save Kotlin/Native caches
+        if: ${{ !cancelled() && github.event_name != 'pull_request' && steps.konan.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.konan
+          key: ${{ steps.konan.outputs.cache-primary-key }}
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
