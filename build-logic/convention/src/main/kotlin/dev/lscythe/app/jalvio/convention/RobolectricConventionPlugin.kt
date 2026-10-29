@@ -25,6 +25,7 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 private const val ROBOLECTRIC_JDK_ACCESS = "--add-exports=java.base/jdk.internal.access=ALL-UNNAMED"
+private const val ROBOLECTRIC_NATIVE_ACCESS = "--enable-native-access=ALL-UNNAMED"
 
 class RobolectricConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) =
@@ -48,6 +49,8 @@ class RobolectricConventionPlugin : Plugin<Project> {
                 }
                 tasks.withType<Test>().configureEach { useJUnitPlatform() }
             }
-            tasks.withType<Test>().configureEach { jvmArgs(ROBOLECTRIC_JDK_ACCESS) }
+            tasks.withType<Test>().configureEach {
+                jvmArgs(ROBOLECTRIC_JDK_ACCESS, ROBOLECTRIC_NATIVE_ACCESS)
+            }
         }
 }
