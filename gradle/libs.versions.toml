@@ -118,6 +118,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 room3 = { id = "androidx.room3", version.ref = "room3" }
+sentry-kmp = { id = "io.sentry.kotlin.multiplatform.gradle", version.ref = "sentryKmp" }
 
 jalvio-android-application = { id = "jalvio.android.application" }
 jalvio-android-application-flavors = { id = "jalvio.android.application.flavors" }

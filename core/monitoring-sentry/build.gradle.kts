@@ -16,7 +16,10 @@
 plugins {
     alias(libs.plugins.jalvio.multiplatform.library)
     alias(libs.plugins.jalvio.metro)
+    alias(libs.plugins.sentry.kmp)
 }
+
+sentryKmp { autoInstall { commonMain { enabled = false } } }
 
 kotlin {
     android { namespace = "dev.lscythe.app.jalvio.core.monitoring.sentry" }
