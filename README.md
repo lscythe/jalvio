@@ -1,5 +1,8 @@
 # Jalvio
 
+[![CI](https://github.com/lscythe/jalvio/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/lscythe/jalvio/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/lscythe/jalvio/actions/workflows/codeql.yml/badge.svg?branch=develop)](https://github.com/lscythe/jalvio/actions/workflows/codeql.yml)
+[![codecov](https://codecov.io/gh/lscythe/jalvio/branch/develop/graph/badge.svg)](https://codecov.io/gh/lscythe/jalvio)
 [![License](https://img.shields.io/github/license/lscythe/jalvio)](LICENSE)
 
 Jalvio is an offline-first public transport app for Jakarta's BRT network, built with Kotlin and Compose Multiplatform for Android and iOS.
@@ -68,15 +71,17 @@ hk install --mise
 
 - `pre-commit` formats Kotlin with kempt and adds license headers
 - `commit-msg` validates the commit header
-- `pre-push` runs the module boundary check and unit tests
+- `pre-push` runs the module boundary check and `mise run test`
 
 ### Common tasks
 
 ```sh
-mise run check      # static checks
-mise run test       # unit tests
+mise run check      # boundaries, translations, foss classpath, dependency guard, lint
+mise run test       # tooling, build-logic, Android host and app unit tests
+mise run test-ios   # iOS simulator tests (needs Xcode)
+mise run build      # debug APKs for every distribution
+mise run build-ios  # iOS simulator app (needs Xcode)
 mise run format     # format sources
-./gradlew :app:android:assembleDebug
 ```
 
 ### Endpoints

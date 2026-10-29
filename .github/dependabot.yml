@@ -1,0 +1,33 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directories:
+      - /
+      - /build-logic
+    schedule:
+      interval: weekly
+    target-branch: develop
+    commit-message:
+      prefix: build
+      include: scope
+    groups:
+      kotlin:
+        patterns:
+          - org.jetbrains.kotlin*
+          - com.google.devtools.ksp*
+          - dev.zacsweers.metro*
+      compose:
+        patterns:
+          - org.jetbrains.compose*
+          - androidx.compose*
+
+  - package-ecosystem: github-actions
+    directories:
+      - /
+      - /.github/actions/*
+    schedule:
+      interval: weekly
+    target-branch: develop
+    commit-message:
+      prefix: ci
+      include: scope

@@ -66,7 +66,15 @@ mise run check
 mise run test
 ```
 
-The `pre-push` hook runs the module boundary check and the unit tests. CI runs the full build and tests for Android and iOS.
+With Xcode installed, also run `mise run test-ios` and `mise run build-ios`.
+
+The `pre-push` hook runs the module boundary check and `mise run test`. On every pull request CI runs:
+
+- **Android**: `mise run check`, `mise run test`, `mise run build` and Kover coverage uploaded to Codecov
+- **iOS**: `mise run test-ios` and `mise run build-ios` on macOS
+- **CodeQL** for Kotlin and Java, and **Dependency review** for new dependencies
+
+Android and iOS must pass before a pull request can merge.
 
 ## Secrets
 

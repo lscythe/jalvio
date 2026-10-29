@@ -10,11 +10,30 @@ run = "kempt format"
 
 [tasks.check]
 description = "Run the static checks"
-run = "./gradlew checkModuleBoundaries :core:resources:checkTranslations"
+run = [
+  "./gradlew -p build-logic :convention:validatePlugins",
+  "./gradlew checkModuleBoundaries :core:resources:checkTranslations :app:android:checkFossClasspath :app:android:dependencyGuard :app:android:lintFossDebug :app:android:lintPlaystoreDebug",
+]
 
 [tasks.test]
-description = "Run the unit tests"
-run = "./gradlew testAndroidHostTest"
+description = "Run the JVM and Android host tests"
+run = [
+  "python3 -m unittest discover -s .github/scripts -p 'test_*.py'",
+  "./gradlew -p build-logic :convention:test",
+  "./gradlew testAndroidHostTest :app:android:testFossDebugUnitTest :app:android:testFossFullDebugUnitTest :app:android:testPlaystoreDebugUnitTest",
+]
+
+[tasks.test-ios]
+description = "Run the iOS simulator tests (needs Xcode)"
+run = "./gradlew iosSimulatorArm64Test"
+
+[tasks.build]
+description = "Assemble the debug APKs for every distribution"
+run = "./gradlew :app:android:assembleDebug"
+
+[tasks.build-ios]
+description = "Build the iOS simulator app (needs Xcode)"
+run = "xcodebuild build -project app/ios/iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath build/ios CODE_SIGNING_ALLOWED=NO"
 
 [tasks.screenshots]
 description = "Record the screenshot baselines"

@@ -33,7 +33,7 @@ hooks {
     ["pre-push"] {
         steps = new Mapping<String, Step> {
             ["gradle-check"] {
-                check = "./gradlew checkModuleBoundaries testAndroidHostTest"
+                check = "./gradlew checkModuleBoundaries && mise run test"
             }
         }
     }
