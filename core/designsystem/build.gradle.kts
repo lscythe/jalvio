@@ -25,7 +25,7 @@ kotlin {
         commonMain.dependencies {
             api(libs.compose.multiplatform.runtime)
             implementation(libs.compose.multiplatform.foundation)
-            implementation(libs.compose.multiplatform.material3)
+            api(libs.compose.multiplatform.material3)
             implementation(libs.materialKolor.material3)
         }
     }
