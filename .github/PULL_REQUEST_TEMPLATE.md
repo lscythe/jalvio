@@ -16,5 +16,4 @@
 - [ ] Tests are added or updated
 - [ ] `mise run check` and `mise run test` pass
 - [ ] UI changes are verified on Android and iOS
-- [ ] Architectural decisions are recorded in `docs/adr`
 - [ ] No secrets or personal data are included

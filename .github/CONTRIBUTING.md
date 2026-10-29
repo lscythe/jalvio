@@ -49,7 +49,7 @@ docs: describe the release flow
 - Use the pull request template.
 - The pull request title must be a valid commit header: it becomes the squash commit on `develop`.
 - One pull request is one complete change: logic, wiring and tests together. Keep unrelated refactors out.
-- Record architectural decisions as an ADR in `docs/adr`.
+- Explain architectural changes in the pull request description, and update `docs/conventions` when a rule changes.
 - Resolve all review conversations before merging.
 
 ## Code style
