@@ -16,6 +16,8 @@
 plugins {
     alias(libs.plugins.jalvio.multiplatform.library)
     alias(libs.plugins.jalvio.multiplatform.library.compose)
+    alias(libs.plugins.jalvio.robolectric)
+    alias(libs.plugins.roborazzi)
 }
 
 kotlin {
@@ -31,6 +33,13 @@ kotlin {
             implementation(libs.compose.multiplatform.foundation)
             implementation(libs.compose.multiplatform.resources)
             implementation(libs.materialKolor.material3)
+        }
+        androidMain.dependencies { implementation(libs.compose.multiplatform.ui.tooling.preview) }
+        commonTest.dependencies { implementation(project(":core:testing")) }
+        getByName("androidHostTest").dependencies {
+            implementation(project(":core:testing-screenshot"))
+            implementation(libs.androidx.compose.ui.testJunit4)
+            implementation(libs.androidx.compose.ui.testManifest)
         }
     }
 }
