@@ -1,0 +1,51 @@
+# Testing
+
+Tests are written first: a failing test, then the code that makes it pass, then the refactor.
+
+## What to test
+
+Test the code Jalvio writes: business rules, mappers, serializers and Room type converters, validation, error mapping, view model state, SQL with real logic, and the DI wiring each distribution gets. Do not re-test library behaviour such as a DAO upsert, DataStore persistence or Ktor's JSON setup. When a component is mostly a library call, extract the decision Jalvio makes into a function and test that.
+
+## Test types
+
+| Kind | Location | Style | Runs with |
+|---|---|---|---|
+| Shared logic | `src/commonTest` | Kotest `BehaviorSpec` | `testAndroidHostTest` (JVM) and `iosSimulatorArm64Test` |
+| Android framework code | `src/androidHostTest` | JUnit 4 `@RunWith(RobolectricTestRunner::class)` with Kotest assertions | `testAndroidHostTest` |
+| Screenshots | `src/androidHostTest` | JUnit 4 + Robolectric + Roborazzi via `captureScreenshot` | `recordRoborazziAndroidHostTest`, `verifyRoborazziAndroidHostTest` |
+| iOS-only code | `src/iosTest` | Kotest `BehaviorSpec` | `iosSimulatorArm64Test` |
+| Android graph per distribution | `app/android/src/test<Flavor>` | JUnit 4 + Robolectric | `:app:android:test<Flavor>DebugUnitTest` |
+| Convention plugins | `build-logic/convention/src/test` | Kotest on JUnit 5, Gradle TestKit for functional tests | `./gradlew -p build-logic :convention:test` |
+| Tooling scripts | `.github/scripts/test_*.py` | `unittest` | `python3 -m unittest discover -s .github/scripts -p 'test_*.py'` |
+
+Kotest specs do not run under the Robolectric runner, so anything that needs Robolectric is a JUnit 4 class on the vintage engine, which the `jalvio.robolectric` plugin adds. The plugin also passes `--add-exports=java.base/jdk.internal.access=ALL-UNNAMED`, which Robolectric needs on JDK 25.
+
+## Tools
+
+- `kotlinx-coroutines-test`, and `MainDispatcherExtension` from `core:testing` to replace `Dispatchers.Main` in a spec.
+- `TestClock` from `core:testing` for staleness, polling and schedule estimates; call `advanceBy` instead of waiting.
+- Turbine for flows.
+- Fakes over mocks in common code, kept in `core:testing` or the module's test source set. MockK only in Android-only tests.
+- `readResource(path)` from `core:testing` reads files from `src/commonTest/resources` on both platforms; the library convention copies them next to the iOS test binary.
+- Ktor `MockEngine` with fixtures copied from the jalvio-service contract, including `304`, problem+json errors and WebSocket frames.
+
+## Screenshots
+
+`captureScreenshot(name, darkTheme) { ... }` from `core:testing-screenshot` wraps content in `JalvioTheme` and a `Surface` and writes `src/androidHostTest/screenshots/<name>.png`. Screenshot tests run under Robolectric with `@GraphicsMode(GraphicsMode.Mode.NATIVE)`. Every `Screen` gets light and dark screenshots for each of its states.
+
+```sh
+mise run screenshots                            # record baselines
+./gradlew verifyRoborazziAndroidHostTest        # compare against them
+```
+
+Commit recorded baselines with the change that caused them.
+
+## Commands
+
+```sh
+mise run test       # tooling, build-logic, Android host and app unit tests
+mise run test-ios   # iOS simulator tests (needs Xcode)
+./gradlew koverXmlReport
+```
+
+The `pre-push` hook runs `mise run test`. CI runs both test tasks and uploads Kover reports to Codecov.

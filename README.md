@@ -10,7 +10,7 @@ Jalvio is an offline-first public transport app for Jakarta's BRT network, built
 The static network (stops, routes, schedules and route shapes) is downloaded once and kept on the device, so search, route browsing and the map keep working without a connection. Live data such as arrivals is fetched only while a screen shows it.
 
 > [!NOTE]
-> Jalvio is in early development. The architectural foundation is being built and there is no public release yet.
+> Jalvio is in early development. The build, core modules and app hosts are in place, features come next, and there is no public release yet.
 
 ## Distributions
 
@@ -20,7 +20,15 @@ The static network (stops, routes, schedules and route shapes) is downloaded onc
 | `fossFull` | Sentry | None |
 | `foss` | None | None |
 
-The `checkFossClasspath` task fails if the `foss` release classpath contains Firebase, Google Play Services or Sentry.
+The `checkFossClasspath` task fails if the `foss` release classpath contains Firebase, Google Play Services or Sentry. Build one distribution with:
+
+```sh
+./gradlew :app:android:assemblePlaystoreDebug
+./gradlew :app:android:assembleFossFullDebug
+./gradlew :app:android:assembleFossDebug
+```
+
+Replace `Debug` with `Release` for a minified release build. Sentry reports only when the `sentryDsn` Gradle property is set.
 
 ## Tech stack
 
@@ -52,13 +60,21 @@ build-logic/        Gradle convention plugins
 
 Modules are named after business concepts, not layers. The dependency rules between them (for example, features never depend on `data/*`) are enforced by `./gradlew checkModuleBoundaries`.
 
+## Documentation
+
+- [Architecture](docs/conventions/architecture.md): layers, dependency rules and data flow
+- [Adding a module](docs/conventions/modules.md): features, domain, data, api and core modules
+- [Code style](docs/conventions/code-style.md): MVI files, error handling, dependency injection and comments
+- [Testing](docs/conventions/testing.md): test types, tools and commands
+- [Git workflow](docs/conventions/git.md): branches, commits, hooks, pull requests and releases
+
 ## Development
 
 ### Prerequisites
 
 - [mise](https://mise.jdx.dev), which installs JDK 25, hk, kempt and Python
 - Android SDK for Android builds
-- Xcode with an iOS Simulator runtime for iOS builds
+- Xcode with an iOS Simulator runtime for iOS builds, tests and the Kotlin modules that import Swift packages (Firebase, Sentry)
 
 ### Setup
 
