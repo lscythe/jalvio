@@ -15,7 +15,7 @@ dependencyGuard = "0.5.0"
 firebaseAnalytics = "24.0.0"
 firebaseKmp = "3.0.0-alpha02"
 gmsPlugin = "4.5.0"
-junitVintage = "6.1.3"
+junit = "6.1.3"
 kermit = "2.2.0"
 kotest = "6.2.6"
 kotlin = "2.4.20"
@@ -59,7 +59,8 @@ compose-multiplatform-ui-test = { module = "org.jetbrains.compose.ui:ui-test", v
 compose-multiplatform-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-analytics-kmp = { module = "dev.gitlive:firebase-analytics", version.ref = "firebaseKmp" }
-junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitVintage" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junit" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kermit-test = { module = "co.touchlab:kermit-test", version.ref = "kermit" }
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
@@ -117,9 +118,11 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 room3 = { id = "androidx.room3", version.ref = "room3" }
+sentry-kmp = { id = "io.sentry.kotlin.multiplatform.gradle", version.ref = "sentryKmp" }
 
 jalvio-android-application = { id = "jalvio.android.application" }
 jalvio-android-application-flavors = { id = "jalvio.android.application.flavors" }
+jalvio-ios-application = { id = "jalvio.ios.application" }
 jalvio-endpoints = { id = "jalvio.endpoints" }
 jalvio-metro = { id = "jalvio.metro" }
 jalvio-module-boundaries = { id = "jalvio.module.boundaries" }

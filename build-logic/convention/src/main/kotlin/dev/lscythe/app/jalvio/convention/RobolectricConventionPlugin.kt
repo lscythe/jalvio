@@ -15,10 +15,12 @@
  */
 package dev.lscythe.app.jalvio.convention
 
+import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
@@ -34,6 +36,17 @@ class RobolectricConventionPlugin : Plugin<Project> {
                         implementation(libs.junit.vintage.engine)
                     }
                 }
+            }
+            pluginManager.withPlugin("com.android.application") {
+                extensions.configure<ApplicationExtension> {
+                    testOptions.unitTests.isIncludeAndroidResources = true
+                }
+                dependencies {
+                    "testImplementation"(libs.robolectric)
+                    "testImplementation"(libs.junit.vintage.engine)
+                    "testRuntimeOnly"(libs.junit.platform.launcher)
+                }
+                tasks.withType<Test>().configureEach { useJUnitPlatform() }
             }
             tasks.withType<Test>().configureEach { jvmArgs(ROBOLECTRIC_JDK_ACCESS) }
         }

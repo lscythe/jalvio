@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "559721126571",
+    "project_id": "jalvio-transit",
+    "storage_bucket": "jalvio-transit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559721126571:android:69a082345e47d7e5eb35ee",
+        "android_client_info": {
+          "package_name": "dev.lscythe.app.jalvio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ4dX1iLEhficgnrn8RGN1-nt7mUjwf8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559721126571:android:95edf7a8d33499e6eb35ee",
+        "android_client_info": {
+          "package_name": "dev.lscythe.app.jalvio.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ4dX1iLEhficgnrn8RGN1-nt7mUjwf8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
