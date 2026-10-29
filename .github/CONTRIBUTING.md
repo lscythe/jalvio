@@ -74,7 +74,7 @@ The `pre-push` hook runs the module boundary check and `mise run test`. On every
 - **iOS**: `mise run test-ios` and `mise run build-ios` on macOS
 - **CodeQL** for Kotlin and Java, and **Dependency review** for new dependencies
 
-Android and iOS must pass before a pull request can merge.
+The Android job must pass before a pull request can merge. The iOS job runs on every pull request but is not required yet.
 
 ## Secrets
 
