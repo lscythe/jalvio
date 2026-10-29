@@ -164,8 +164,8 @@ org.jetbrains.compose.animation:animation-android:1.13.0-beta01
 org.jetbrains.compose.animation:animation-core-android:1.13.0-beta01
 org.jetbrains.compose.animation:animation-core:1.13.0-beta01
 org.jetbrains.compose.animation:animation:1.13.0-beta01
-org.jetbrains.compose.components:components-resources-android:1.12.1
-org.jetbrains.compose.components:components-resources:1.12.1
+org.jetbrains.compose.components:components-resources-android:1.13.0-beta01
+org.jetbrains.compose.components:components-resources:1.13.0-beta01
 org.jetbrains.compose.foundation:foundation-android:1.13.0-beta01
 org.jetbrains.compose.foundation:foundation-layout-android:1.13.0-beta01
 org.jetbrains.compose.foundation:foundation-layout:1.13.0-beta01

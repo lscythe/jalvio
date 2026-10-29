@@ -19,14 +19,22 @@ plugins {
 }
 
 kotlin {
-    android { namespace = "dev.lscythe.app.jalvio.core.designsystem" }
+    android {
+        namespace = "dev.lscythe.app.jalvio.core.designsystem"
+        androidResources.enable = true
+    }
 
     sourceSets {
         commonMain.dependencies {
             api(libs.compose.multiplatform.runtime)
-            implementation(libs.compose.multiplatform.foundation)
             api(libs.compose.multiplatform.material3)
+            implementation(libs.compose.multiplatform.foundation)
+            implementation(libs.compose.multiplatform.resources)
             implementation(libs.materialKolor.material3)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "dev.lscythe.app.jalvio.core.designsystem.generated.resources"
 }
