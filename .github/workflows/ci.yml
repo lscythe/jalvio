@@ -24,8 +24,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    name: Changes
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: read
+    outputs:
+      code: ${{ steps.classify.outputs.code }}
+    steps:
+      - name: Classify changed files
+        id: classify
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" != "pull_request" ]]; then
+            echo 'code=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          gh api --paginate "repos/$REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" --jq '.[].filename' > "$RUNNER_TEMP/files"
+          if grep -qvE '(\.md$|^docs/)' "$RUNNER_TEMP/files"; then
+            echo 'code=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'Only documentation changed; skipping the build jobs.'
+            echo 'code=false' >> "$GITHUB_OUTPUT"
+          fi
+
   android:
     name: Android
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ubuntu-24.04
     steps:
       - name: Check out repository
@@ -70,6 +101,8 @@ jobs:
 
   ios:
     name: iOS
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: macos-26
     steps:
       - name: Check out repository
