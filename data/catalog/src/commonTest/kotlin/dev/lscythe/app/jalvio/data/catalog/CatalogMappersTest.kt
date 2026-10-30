@@ -97,4 +97,15 @@ class CatalogMappersTest :
                 row.toStop(emptyList(), emptyList(), emptyList()).kind shouldBe StopKind.Unknown
             }
         }
+
+        Given("a region whose time zone the device does not know") {
+            val unknownZone =
+                bandungLinks.copy(region = bandungLinks.region.copy(timeZone = "Mars/Olympus_Mons"))
+
+            Then("it is left out of the stored list") {
+                listOf(unknownZone, jakartaLinks).toRows().map {
+                    it.id to it.listOrder
+                } shouldContainExactly listOf("jakarta" to 0)
+            }
+        }
     })

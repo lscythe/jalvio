@@ -103,26 +103,31 @@ internal fun ShapesDto.toRows(): List<ShapeEntity> = shapes.map {
     ShapeEntity(it.patternId, it.polyline)
 }
 
-internal fun List<RegionLinks>.toRows(): List<RegionEntity> = mapIndexed { order, links ->
-    val region = links.region
-    RegionEntity(
-        id = region.id,
-        name = region.name,
-        timeZone = region.timeZone,
-        southWestLat = region.bounds.southWest.lat,
-        southWestLng = region.bounds.southWest.lng,
-        northEastLat = region.bounds.northEast.lat,
-        northEastLng = region.bounds.northEast.lng,
-        live = region.live,
-        catalogUrl = links.catalogUrl.toString(),
-        catalogVersion = links.catalogVersion,
-        shapesUrl = links.shapesUrl.toString(),
-        mapUrl = links.mapUrl?.toString(),
-        mapBytes = region.map?.bytes,
-        mapUpdated = region.map?.updated,
-        listOrder = order,
-    )
+internal fun List<RegionLinks>.toRows(): List<RegionEntity> = filter {
+    it.region.timeZone.isKnownTimeZone()
 }
+    .mapIndexed { order, links ->
+        val region = links.region
+        RegionEntity(
+            id = region.id,
+            name = region.name,
+            timeZone = region.timeZone,
+            southWestLat = region.bounds.southWest.lat,
+            southWestLng = region.bounds.southWest.lng,
+            northEastLat = region.bounds.northEast.lat,
+            northEastLng = region.bounds.northEast.lng,
+            live = region.live,
+            catalogUrl = links.catalogUrl.toString(),
+            catalogVersion = links.catalogVersion,
+            shapesUrl = links.shapesUrl.toString(),
+            mapUrl = links.mapUrl?.toString(),
+            mapBytes = region.map?.bytes,
+            mapUpdated = region.map?.updated,
+            listOrder = order,
+        )
+    }
+
+private fun String.isKnownTimeZone(): Boolean = runCatching { TimeZone.of(this) }.isSuccess
 
 internal fun RouteDto.toRow() = RouteEntity(id, code, name, category, color, textColor, fareId)
 

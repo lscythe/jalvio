@@ -33,10 +33,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 @ContributesTo(AppScope::class)
 @BindingContainer
-internal object CatalogDatabaseBindings {
+object CatalogDatabaseBindings {
     @Provides
     @SingleIn(AppScope::class)
-    fun provideCatalogDatabase(
+    internal fun provideCatalogDatabase(
         paths: DatabasePaths,
         @Dispatcher(JalvioDispatcher.IO) ioDispatcher: CoroutineDispatcher,
     ): CatalogDatabase =
@@ -46,5 +46,6 @@ internal object CatalogDatabaseBindings {
             .fallbackToDestructiveMigration(dropAllTables = true)
             .buildJalvio(ioDispatcher)
 
-    @Provides fun provideCatalogDao(database: CatalogDatabase): CatalogDao = database.catalogDao()
+    @Provides
+    internal fun provideCatalogDao(database: CatalogDatabase): CatalogDao = database.catalogDao()
 }
