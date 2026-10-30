@@ -44,7 +44,7 @@ rootProject.name = "Jalvio"
 
 include(":app:android", ":app:ios", ":app:shared")
 
-include(":api:catalog")
+include(":api:catalog", ":domain:catalog")
 
 include(
     ":core:analytics",
