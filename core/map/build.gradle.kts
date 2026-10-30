@@ -25,6 +25,7 @@ kotlin {
         commonMain.dependencies {
             api(libs.compose.multiplatform.runtime)
             api(libs.compose.multiplatform.ui)
+            implementation(libs.compose.multiplatform.foundation)
             implementation(libs.maplibre.compose)
         }
         androidMain.dependencies { runtimeOnly(libs.maplibre.compose.opengl.runtime) }
