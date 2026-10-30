@@ -51,3 +51,7 @@ mise run test-ios   # iOS simulator tests (needs Xcode)
 ```
 
 The `pre-push` hook runs `mise run test`. CI runs both test tasks and uploads Kover reports to Codecov.
+
+## Coverage
+
+Coverage counts only the code these rules say to test. `build-logic/convention/src/main/kotlin/dev/lscythe/app/jalvio/convention/Kover.kt` excludes the rest from every module: generated code (resources, Room implementations, Metro factories, the `JalvioIcons` pack), DI wiring and no-op implementations, the Room schema, app entry points, `core:testing` helpers, and platform adapters that only hand calls to an SDK. A new adapter goes on that list once its decisions are extracted into tested functions.
