@@ -33,6 +33,7 @@ kotlin {
             implementation(libs.compose.multiplatform.foundation)
             implementation(libs.compose.multiplatform.resources)
             implementation(libs.materialKolor.material3)
+            implementation(project(":core:resources"))
         }
         androidMain.dependencies { implementation(libs.compose.multiplatform.ui.tooling.preview) }
         commonTest.dependencies { implementation(project(":core:testing")) }
