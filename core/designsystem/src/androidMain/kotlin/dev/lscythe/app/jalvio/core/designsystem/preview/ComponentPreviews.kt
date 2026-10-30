@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import dev.lscythe.app.jalvio.core.designsystem.component.CrowdChip
 import dev.lscythe.app.jalvio.core.designsystem.component.CrowdDots
 import dev.lscythe.app.jalvio.core.designsystem.component.CrowdLevel
+import dev.lscythe.app.jalvio.core.designsystem.component.DialogTone
+import dev.lscythe.app.jalvio.core.designsystem.component.JalvioDialog
 import dev.lscythe.app.jalvio.core.designsystem.component.LiveDot
 import dev.lscythe.app.jalvio.core.designsystem.component.RouteBadge
 import dev.lscythe.app.jalvio.core.designsystem.component.RouteBadgeSize
@@ -36,6 +38,7 @@ import dev.lscythe.app.jalvio.core.designsystem.component.toast.JalvioToast
 import dev.lscythe.app.jalvio.core.designsystem.component.toast.ToastData
 import dev.lscythe.app.jalvio.core.designsystem.component.toast.ToastDuration
 import dev.lscythe.app.jalvio.core.designsystem.component.toast.ToastTone
+import dev.lscythe.app.jalvio.core.designsystem.icon.CloudOffFilled
 import dev.lscythe.app.jalvio.core.designsystem.icon.JalvioIcons
 import dev.lscythe.app.jalvio.core.designsystem.icon.NotificationsFilled
 import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioTheme
@@ -72,6 +75,21 @@ private fun ToastPreview() = PreviewSurface {
             action = null,
             duration = ToastDuration.Default,
         )
+    )
+}
+
+@JalvioPreviews
+@Composable
+private fun DialogPreview() = JalvioTheme {
+    JalvioDialog(
+        icon = JalvioIcons.CloudOffFilled,
+        title = "Delete your account?",
+        text = "Your saved places, trips and reports are removed from this phone.",
+        confirmLabel = "Delete everything",
+        onConfirm = {},
+        dismissLabel = "Keep my account",
+        onDismissRequest = {},
+        tone = DialogTone.Error,
     )
 }
 
