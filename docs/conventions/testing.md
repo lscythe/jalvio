@@ -33,6 +33,8 @@ Kotest specs do not run under the Robolectric runner, so anything that needs Rob
 
 `captureScreenshot(name, darkTheme) { ... }` from `core:testing-screenshot` wraps content in the default `MaterialTheme` and a `Surface` and writes `src/androidHostTest/screenshots/<name>.png`. Screenshot tests run under Robolectric with `@GraphicsMode(GraphicsMode.Mode.NATIVE)`. Every `Screen` gets light and dark screenshots for each of its states.
 
+Content with an infinite animation, such as a blinking dot or a progress indicator, never lets Compose go idle, so `captureScreenshot { ... }` keeps advancing frames and the test stalls. Render it with `createComposeRule()`, set `mainClock.autoAdvance = false`, and capture with `composeRule.onRoot().captureScreenshot(name)`; `mainClock.advanceTimeBy` then captures later frames.
+
 ```sh
 mise run screenshots                            # record baselines
 ./gradlew verifyRoborazziAndroidHostTest        # compare against them

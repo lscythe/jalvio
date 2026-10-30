@@ -6,4 +6,5 @@
     <string name="crowd_standing">Berdiri</string>
     <string name="crowd_packed">Penuh</string>
     <string name="crowd_none">Belum ada laporan</string>
+    <string name="live">Langsung</string>
 </resources>

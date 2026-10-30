@@ -20,14 +20,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import com.github.takahirom.roborazzi.captureRoboImage
 
 private const val SCREENSHOT_DIRECTORY = "src/androidHostTest/screenshots"
 
 fun captureScreenshot(name: String, darkTheme: Boolean = false, content: @Composable () -> Unit) {
-    captureRoboImage(filePath = "$SCREENSHOT_DIRECTORY/$name.png") {
+    captureRoboImage(filePath = screenshotPath(name)) {
         MaterialTheme(colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()) {
             Surface(content = content)
         }
     }
 }
+
+fun SemanticsNodeInteraction.captureScreenshot(name: String) {
+    captureRoboImage(filePath = screenshotPath(name))
+}
+
+private fun screenshotPath(name: String) = "$SCREENSHOT_DIRECTORY/$name.png"

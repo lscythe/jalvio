@@ -24,7 +24,9 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             api(libs.compose.multiplatform.runtime)
+            api(libs.androidx.compose.ui.testJunit4)
             implementation(libs.compose.multiplatform.material3)
+            implementation(libs.roborazzi)
             implementation(libs.roborazzi.compose)
         }
     }

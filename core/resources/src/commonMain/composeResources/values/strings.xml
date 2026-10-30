@@ -6,4 +6,5 @@
     <string name="crowd_standing">Standing</string>
     <string name="crowd_packed">Packed</string>
     <string name="crowd_none">No reports</string>
+    <string name="live">Live</string>
 </resources>
