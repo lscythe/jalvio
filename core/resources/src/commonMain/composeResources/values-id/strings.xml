@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jalvio</string>
+    <string name="crowd_calm">Kursi kosong</string>
+    <string name="crowd_busy">Ada kursi</string>
+    <string name="crowd_standing">Berdiri</string>
+    <string name="crowd_packed">Penuh</string>
+    <string name="crowd_none">Belum ada laporan</string>
+    <string name="live">Langsung</string>
+    <string name="toast_close">Tutup</string>
 </resources>

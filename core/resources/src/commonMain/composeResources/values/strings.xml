@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jalvio</string>
+    <string name="crowd_calm">Seats free</string>
+    <string name="crowd_busy">Some seats</string>
+    <string name="crowd_standing">Standing</string>
+    <string name="crowd_packed">Packed</string>
+    <string name="crowd_none">No reports</string>
+    <string name="live">Live</string>
+    <string name="toast_close">Close</string>
 </resources>

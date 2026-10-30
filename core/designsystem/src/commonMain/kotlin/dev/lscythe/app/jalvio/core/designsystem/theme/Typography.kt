@@ -82,7 +82,7 @@ fun rememberJalvioTypography(): Typography {
 }
 
 @Composable
-internal fun robotoFlex(width: Float): FontFamily =
+private fun robotoFlex(width: Float): FontFamily =
     FontFamily(
         Weights.map { weight ->
             Font(
