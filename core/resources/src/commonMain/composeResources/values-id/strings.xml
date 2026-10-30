@@ -7,4 +7,5 @@
     <string name="crowd_packed">Penuh</string>
     <string name="crowd_none">Belum ada laporan</string>
     <string name="live">Langsung</string>
+    <string name="toast_close">Tutup</string>
 </resources>

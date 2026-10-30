@@ -7,4 +7,5 @@
     <string name="crowd_packed">Packed</string>
     <string name="crowd_none">No reports</string>
     <string name="live">Live</string>
+    <string name="toast_close">Close</string>
 </resources>
