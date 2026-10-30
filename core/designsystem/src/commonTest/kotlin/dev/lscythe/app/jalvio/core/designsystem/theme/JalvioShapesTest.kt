@@ -42,6 +42,12 @@ class JalvioShapesTest :
                 JalvioShapes.groupItem(1, 2, outer = 24.dp) shouldBe
                     RoundedCornerShape(6.dp, 6.dp, 24.dp, 24.dp)
             }
+            Then("joined buttons can widen the inner corner") {
+                JalvioShapes.groupItem(0, 2, outer = 28.dp, inner = 8.dp) shouldBe
+                    RoundedCornerShape(28.dp, 28.dp, 8.dp, 8.dp)
+                JalvioShapes.groupItem(1, 2, outer = 28.dp, inner = 8.dp) shouldBe
+                    RoundedCornerShape(8.dp, 8.dp, 28.dp, 28.dp)
+            }
             Then("an index outside the group is rejected") {
                 shouldThrow<IllegalArgumentException> { JalvioShapes.groupItem(3, 3) }
                 shouldThrow<IllegalArgumentException> { JalvioShapes.groupItem(0, 0) }

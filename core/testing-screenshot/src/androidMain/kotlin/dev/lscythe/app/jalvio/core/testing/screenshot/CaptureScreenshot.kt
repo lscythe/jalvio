@@ -21,7 +21,9 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.SemanticsNodeInteraction
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.captureRoboImage
+import com.github.takahirom.roborazzi.captureScreenRoboImage
 
 private const val SCREENSHOT_DIRECTORY = "src/androidHostTest/screenshots"
 
@@ -35,6 +37,11 @@ fun captureScreenshot(name: String, darkTheme: Boolean = false, content: @Compos
 
 fun SemanticsNodeInteraction.captureScreenshot(name: String) {
     captureRoboImage(filePath = screenshotPath(name))
+}
+
+@OptIn(ExperimentalRoborazziApi::class)
+fun captureScreenScreenshot(name: String) {
+    captureScreenRoboImage(filePath = screenshotPath(name))
 }
 
 private fun screenshotPath(name: String) = "$SCREENSHOT_DIRECTORY/$name.png"

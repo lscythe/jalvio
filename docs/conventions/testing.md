@@ -35,6 +35,8 @@ Kotest specs do not run under the Robolectric runner, so anything that needs Rob
 
 Content with an infinite animation, such as a blinking dot or a progress indicator, never lets Compose go idle, so `captureScreenshot { ... }` keeps advancing frames and the test stalls. Render it with `createComposeRule()`, set `mainClock.autoAdvance = false`, and capture with `composeRule.onRoot().captureScreenshot(name)`; `mainClock.advanceTimeBy` then captures later frames.
 
+Dialogs and modal sheets open their own window, which `captureRoboImage` does not see. Show them from `createComposeRule()` and capture the whole screen with `captureScreenScreenshot(name)`.
+
 ```sh
 mise run screenshots                            # record baselines
 ./gradlew verifyRoborazziAndroidHostTest        # compare against them

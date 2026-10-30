@@ -17,8 +17,11 @@ package dev.lscythe.app.jalvio.core.designsystem.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.ListItemShapes
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.Shapes
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.graphics.shapes.RoundedPolygon
@@ -49,10 +52,19 @@ object JalvioShapes {
     val celebration: RoundedPolygon = MaterialShapes.Sunny
     val arrival: RoundedPolygon = MaterialShapes.Burst
 
-    fun groupItem(index: Int, count: Int, outer: Dp = 20.dp): RoundedCornerShape {
+    fun groupItem(
+        index: Int,
+        count: Int,
+        outer: Dp = 20.dp,
+        inner: Dp = InnerCorner,
+    ): RoundedCornerShape {
         require(count > 0 && index in 0 until count) { "index $index outside a group of $count" }
-        val top = if (index == 0) outer else InnerCorner
-        val bottom = if (index == count - 1) outer else InnerCorner
+        val top = if (index == 0) outer else inner
+        val bottom = if (index == count - 1) outer else inner
         return RoundedCornerShape(top, top, bottom, bottom)
     }
+
+    @Composable
+    fun segmentedListItem(index: Int, count: Int): ListItemShapes =
+        ListItemDefaults.segmentedShapes(index, count).copy(shape = groupItem(index, count))
 }
