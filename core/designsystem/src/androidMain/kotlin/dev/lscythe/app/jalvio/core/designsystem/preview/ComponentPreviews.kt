@@ -17,6 +17,7 @@ package dev.lscythe.app.jalvio.core.designsystem.preview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -28,6 +29,9 @@ import dev.lscythe.app.jalvio.core.designsystem.component.CrowdLevel
 import dev.lscythe.app.jalvio.core.designsystem.component.LiveDot
 import dev.lscythe.app.jalvio.core.designsystem.component.RouteBadge
 import dev.lscythe.app.jalvio.core.designsystem.component.RouteBadgeSize
+import dev.lscythe.app.jalvio.core.designsystem.component.jali.Jali
+import dev.lscythe.app.jalvio.core.designsystem.component.jali.JaliMood
+import dev.lscythe.app.jalvio.core.designsystem.component.jali.JaliTone
 import dev.lscythe.app.jalvio.core.designsystem.component.toast.JalvioToast
 import dev.lscythe.app.jalvio.core.designsystem.component.toast.ToastData
 import dev.lscythe.app.jalvio.core.designsystem.component.toast.ToastDuration
@@ -69,6 +73,16 @@ private fun ToastPreview() = PreviewSurface {
             duration = ToastDuration.Default,
         )
     )
+}
+
+@JalvioPreviews
+@Composable
+private fun JaliPreview() = PreviewSurface {
+    JaliTone.entries.forEach { tone ->
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            JaliMood.entries.forEach { Jali(it, tone = tone, size = 40.dp) }
+        }
+    }
 }
 
 @Composable
