@@ -59,6 +59,7 @@ include(
     ":core:network",
     ":core:permissions",
     ":core:resources",
+    ":core:sync",
     ":core:testing",
     ":core:testing-screenshot",
     ":core:ui",
