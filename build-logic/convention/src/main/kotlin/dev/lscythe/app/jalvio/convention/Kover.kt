@@ -50,8 +50,7 @@ private val platformAdapterClasses =
     listOf(
         "dev.lscythe.app.jalvio.core.analytics.firebase.FirebaseAnalyticsHelper",
         "dev.lscythe.app.jalvio.core.common.dispatchers.PlatformIoDispatcher_androidKt",
-        "dev.lscythe.app.jalvio.core.database.DatabaseBuilder_androidKt",
-        "dev.lscythe.app.jalvio.core.database.JalvioDatabaseKt",
+        "dev.lscythe.app.jalvio.core.database.DatabasePathsKt",
         "dev.lscythe.app.jalvio.core.location.LocationManagerLocationProvider*",
         "dev.lscythe.app.jalvio.core.map.JalvioMapKt",
         "dev.lscythe.app.jalvio.core.monitoring.sentry.SentryMonitor",

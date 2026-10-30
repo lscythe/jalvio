@@ -15,11 +15,14 @@
  */
 package dev.lscythe.app.jalvio.core.database.di
 
-import androidx.room3.RoomDatabase
+import androidx.room3.Room
 import dev.lscythe.app.jalvio.core.common.dispatchers.Dispatcher
 import dev.lscythe.app.jalvio.core.common.dispatchers.JalvioDispatcher
+import dev.lscythe.app.jalvio.core.database.DATABASE_FILE_NAME
+import dev.lscythe.app.jalvio.core.database.DatabasePaths
 import dev.lscythe.app.jalvio.core.database.JalvioDatabase
-import dev.lscythe.app.jalvio.core.database.buildJalvioDatabase
+import dev.lscythe.app.jalvio.core.database.JalvioDatabaseConstructor
+import dev.lscythe.app.jalvio.core.database.buildJalvio
 import dev.lscythe.app.jalvio.core.database.example.ExampleDao
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
@@ -34,9 +37,13 @@ object DatabaseBindings {
     @Provides
     @SingleIn(AppScope::class)
     fun provideDatabase(
-        builder: RoomDatabase.Builder<JalvioDatabase>,
+        paths: DatabasePaths,
         @Dispatcher(JalvioDispatcher.IO) ioDispatcher: CoroutineDispatcher,
-    ): JalvioDatabase = buildJalvioDatabase(builder, ioDispatcher)
+    ): JalvioDatabase =
+        Room.databaseBuilder(paths.pathOf(DATABASE_FILE_NAME)) {
+                JalvioDatabaseConstructor.initialize()
+            }
+            .buildJalvio(ioDispatcher)
 
     @Provides fun provideExampleDao(database: JalvioDatabase): ExampleDao = database.exampleDao()
 }

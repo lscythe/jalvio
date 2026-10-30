@@ -15,8 +15,6 @@
  */
 package dev.lscythe.app.jalvio.core.database
 
-import androidx.room3.Room
-import androidx.room3.RoomDatabase
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
@@ -26,8 +24,17 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
+@ContributesTo(AppScope::class)
+@BindingContainer
+object DatabasePathsBindings {
+    @Provides
+    fun provideDatabasePaths(): DatabasePaths = DatabasePaths { fileName ->
+        "${documentsPath()}/$fileName"
+    }
+}
+
 @OptIn(ExperimentalForeignApi::class)
-internal fun jalvioDatabaseBuilder(): RoomDatabase.Builder<JalvioDatabase> {
+private fun documentsPath(): String {
     val documentDirectory =
         NSFileManager.defaultManager.URLForDirectory(
             directory = NSDocumentDirectory,
@@ -36,13 +43,5 @@ internal fun jalvioDatabaseBuilder(): RoomDatabase.Builder<JalvioDatabase> {
             create = false,
             error = null,
         )
-    return Room.databaseBuilder(requireNotNull(documentDirectory?.path) + "/$DATABASE_FILE_NAME") {
-        JalvioDatabaseConstructor.initialize()
-    }
-}
-
-@ContributesTo(AppScope::class)
-@BindingContainer
-object DatabaseBuilderBindings {
-    @Provides fun provideBuilder(): RoomDatabase.Builder<JalvioDatabase> = jalvioDatabaseBuilder()
+    return requireNotNull(documentDirectory?.path)
 }

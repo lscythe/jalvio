@@ -19,10 +19,8 @@ import androidx.room3.ConstructedBy
 import androidx.room3.Database
 import androidx.room3.RoomDatabase
 import androidx.room3.RoomDatabaseConstructor
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import dev.lscythe.app.jalvio.core.database.example.ExampleDao
 import dev.lscythe.app.jalvio.core.database.example.ExampleEntity
-import kotlinx.coroutines.CoroutineDispatcher
 
 @Database(entities = [ExampleEntity::class], version = 1)
 @ConstructedBy(JalvioDatabaseConstructor::class)
@@ -34,9 +32,3 @@ abstract class JalvioDatabase : RoomDatabase() {
 expect object JalvioDatabaseConstructor : RoomDatabaseConstructor<JalvioDatabase> {
     override fun initialize(): JalvioDatabase
 }
-
-internal fun buildJalvioDatabase(
-    builder: RoomDatabase.Builder<JalvioDatabase>,
-    ioDispatcher: CoroutineDispatcher,
-): JalvioDatabase =
-    builder.setDriver(BundledSQLiteDriver()).setQueryCoroutineContext(ioDispatcher).build()

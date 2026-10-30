@@ -16,22 +16,16 @@
 package dev.lscythe.app.jalvio.core.database
 
 import android.content.Context
-import androidx.room3.Room
-import androidx.room3.RoomDatabase
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 
-internal fun jalvioDatabaseBuilder(context: Context): RoomDatabase.Builder<JalvioDatabase> =
-    Room.databaseBuilder(context, context.getDatabasePath(DATABASE_FILE_NAME).absolutePath) {
-        JalvioDatabaseConstructor.initialize()
-    }
-
 @ContributesTo(AppScope::class)
 @BindingContainer
-object DatabaseBuilderBindings {
+object DatabasePathsBindings {
     @Provides
-    fun provideBuilder(context: Context): RoomDatabase.Builder<JalvioDatabase> =
-        jalvioDatabaseBuilder(context)
+    fun provideDatabasePaths(context: Context): DatabasePaths = DatabasePaths { fileName ->
+        context.getDatabasePath(fileName).absolutePath
+    }
 }
