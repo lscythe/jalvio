@@ -56,7 +56,9 @@ The design follows Material 3 Expressive, so features use its stock components a
 - Tokens Material has no slot for: `JalvioTheme.colors` (crowd and info meaning colors), `RouteTone`, `JalvioShapes`, `JalvioElevation` and the `JalvioIcons` pack.
 - Components Material lacks, and only those.
 
-Previews use `@JalvioPreviews`. `core:testing-screenshot` does not depend on the design system, so screenshot tests that need the Jalvio look wrap their content in `JalvioTheme(settings)` themselves. Code and copy use US spelling, such as "color".
+Screens target phones in portrait for now. They keep `JalvioLayout.screenMargin` (16 dp) at the sides and must not break or clip when the phone rotates, but landscape, foldable and tablet layouts wait for their designs, and with them window size classes.
+
+Previews use `@JalvioPreviews`, which includes a 320 dp phone at font scale 2. `core:testing-screenshot` does not depend on the design system, so screenshot tests that need the Jalvio look wrap their content in `JalvioTheme(settings)` themselves. Code and copy use US spelling, such as "color".
 
 ## Data flow
 

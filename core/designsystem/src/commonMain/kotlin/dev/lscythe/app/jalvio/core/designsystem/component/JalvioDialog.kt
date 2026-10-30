@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -43,6 +45,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioElevation
 import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioShapes
@@ -70,42 +73,44 @@ fun JalvioDialog(
     val shape = MaterialTheme.shapes.extraLargeIncreased
     BasicAlertDialog(
         onDismissRequest = onDismissRequest,
-        modifier = modifier.padding(horizontal = DialogMargin),
+        modifier = modifier.padding(DialogMargin),
     ) {
         Surface(
             modifier = Modifier.dropShadow(shape, JalvioElevation.level3),
             shape = shape,
             color = scheme.surface,
         ) {
-            Column(
-                Modifier.padding(start = 20.dp, top = 24.dp, end = 20.dp, bottom = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp),
-            ) {
-                Box(
-                    Modifier.size(IconContainerSize)
-                        .clip(JalvioShapes.openDetail.toShape())
-                        .background(colors.iconContainer),
-                    contentAlignment = Alignment.Center,
+            Column(Modifier.padding(start = 20.dp, top = 24.dp, end = 20.dp, bottom = 16.dp)) {
+                Column(
+                    Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                 ) {
-                    Icon(
-                        icon,
-                        contentDescription = null,
-                        modifier = Modifier.size(IconSize),
-                        tint = colors.onIconContainer,
+                    Box(
+                        Modifier.size(IconContainerSize)
+                            .clip(JalvioShapes.openDetail.toShape())
+                            .background(colors.iconContainer),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            icon,
+                            contentDescription = null,
+                            modifier = Modifier.size(IconSize),
+                            tint = colors.onIconContainer,
+                        )
+                    }
+                    Text(
+                        title,
+                        modifier = Modifier.semantics { heading() },
+                        style = MaterialTheme.typography.headlineLarge,
+                    )
+                    Text(
+                        text,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = scheme.onSurfaceVariant,
                     )
                 }
-                Text(
-                    title,
-                    modifier = Modifier.semantics { heading() },
-                    style = MaterialTheme.typography.headlineLarge,
-                )
-                Text(
-                    text,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = scheme.onSurfaceVariant,
-                )
                 Column(
-                    Modifier.padding(top = 4.dp),
+                    Modifier.padding(top = 18.dp),
                     verticalArrangement = Arrangement.spacedBy(ButtonGap),
                 ) {
                     DialogButton(confirmLabel, onConfirm, 0, colors.action, colors.onAction)
@@ -137,7 +142,7 @@ private fun DialogButton(
             JalvioShapes.groupItem(index, 2, outer = ButtonOuterCorner, inner = ButtonInnerCorner),
         colors = ButtonDefaults.buttonColors(containerColor = container, contentColor = content),
     ) {
-        Text(label, style = MaterialTheme.typography.labelLarge)
+        Text(label, style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
     }
 
 private class DialogToneColors(

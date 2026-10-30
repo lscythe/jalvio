@@ -22,4 +22,5 @@ import androidx.compose.ui.tooling.preview.Preview
 @Preview(name = "Light")
 @Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES or UI_MODE_TYPE_NORMAL)
 @Preview(name = "Font 1.5", fontScale = 1.5f)
+@Preview(name = "Small phone, font 2", widthDp = 320, heightDp = 640, fontScale = 2f)
 annotation class JalvioPreviews

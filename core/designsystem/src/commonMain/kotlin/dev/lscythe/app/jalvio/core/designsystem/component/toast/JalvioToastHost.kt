@@ -67,6 +67,7 @@ import androidx.compose.ui.unit.dp
 import dev.lscythe.app.jalvio.core.designsystem.icon.Close
 import dev.lscythe.app.jalvio.core.designsystem.icon.JalvioIcons
 import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioElevation
+import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioLayout
 import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioShapes
 import dev.lscythe.app.jalvio.core.resources.generated.resources.Res
 import dev.lscythe.app.jalvio.core.resources.generated.resources.toast_close
@@ -95,7 +96,12 @@ fun JalvioToastHost(state: JalvioToastHostState, modifier: Modifier = Modifier) 
         if (toast != null) {
             JalvioToast(
                 toast,
-                Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 114.dp),
+                Modifier.padding(
+                    start = JalvioLayout.screenMargin,
+                    top = JalvioLayout.screenMargin,
+                    end = JalvioLayout.screenMargin,
+                    bottom = 114.dp,
+                ),
             )
         }
     }
