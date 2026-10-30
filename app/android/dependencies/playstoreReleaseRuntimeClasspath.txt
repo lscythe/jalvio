@@ -39,6 +39,8 @@ androidx.compose.ui:ui-graphics-android:1.13.0-beta01
 androidx.compose.ui:ui-graphics:1.13.0-beta01
 androidx.compose.ui:ui-text-android:1.13.0-beta01
 androidx.compose.ui:ui-text:1.13.0-beta01
+androidx.compose.ui:ui-tooling-preview-android:1.13.0-beta01
+androidx.compose.ui:ui-tooling-preview:1.13.0-beta01
 androidx.compose.ui:ui-unit-android:1.13.0-beta01
 androidx.compose.ui:ui-unit:1.13.0-beta01
 androidx.compose.ui:ui-util-android:1.13.0-beta01
@@ -229,8 +231,8 @@ org.jetbrains.compose.animation:animation-android:1.13.0-beta01
 org.jetbrains.compose.animation:animation-core-android:1.13.0-beta01
 org.jetbrains.compose.animation:animation-core:1.13.0-beta01
 org.jetbrains.compose.animation:animation:1.13.0-beta01
-org.jetbrains.compose.components:components-resources-android:1.12.1
-org.jetbrains.compose.components:components-resources:1.12.1
+org.jetbrains.compose.components:components-resources-android:1.13.0-beta01
+org.jetbrains.compose.components:components-resources:1.13.0-beta01
 org.jetbrains.compose.foundation:foundation-android:1.13.0-beta01
 org.jetbrains.compose.foundation:foundation-layout-android:1.13.0-beta01
 org.jetbrains.compose.foundation:foundation-layout:1.13.0-beta01
@@ -252,6 +254,8 @@ org.jetbrains.compose.ui:ui-graphics-android:1.13.0-beta01
 org.jetbrains.compose.ui:ui-graphics:1.13.0-beta01
 org.jetbrains.compose.ui:ui-text-android:1.13.0-beta01
 org.jetbrains.compose.ui:ui-text:1.13.0-beta01
+org.jetbrains.compose.ui:ui-tooling-preview-android:1.13.0-beta01
+org.jetbrains.compose.ui:ui-tooling-preview:1.13.0-beta01
 org.jetbrains.compose.ui:ui-unit-android:1.13.0-beta01
 org.jetbrains.compose.ui:ui-unit:1.13.0-beta01
 org.jetbrains.compose.ui:ui-util-android:1.13.0-beta01

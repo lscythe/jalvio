@@ -1,0 +1,96 @@
+/*
+ * Copyright 2026 Lscythe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package dev.lscythe.app.jalvio.core.designsystem.icon
+
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.unit.dp
+
+val JalvioIcons.DoorFront: ImageVector
+    get() {
+        if (_DoorFront != null) {
+            return _DoorFront!!
+        }
+        _DoorFront =
+            ImageVector.Builder(
+                    name = "DoorFront",
+                    defaultWidth = 24.dp,
+                    defaultHeight = 24.dp,
+                    viewportWidth = 960f,
+                    viewportHeight = 960f,
+                )
+                .apply {
+                    path(fill = SolidColor(Color.Black)) {
+                        moveTo(160f, 840f)
+                        quadTo(143f, 840f, 131.5f, 828.5f)
+                        quadTo(120f, 817f, 120f, 800f)
+                        quadTo(120f, 783f, 131.5f, 771.5f)
+                        quadTo(143f, 760f, 160f, 760f)
+                        lineTo(200f, 760f)
+                        lineTo(200f, 200f)
+                        quadTo(200f, 167f, 223.5f, 143.5f)
+                        quadTo(247f, 120f, 280f, 120f)
+                        lineTo(680f, 120f)
+                        quadTo(713f, 120f, 736.5f, 143.5f)
+                        quadTo(760f, 167f, 760f, 200f)
+                        lineTo(760f, 760f)
+                        lineTo(800f, 760f)
+                        quadTo(817f, 760f, 828.5f, 771.5f)
+                        quadTo(840f, 783f, 840f, 800f)
+                        quadTo(840f, 817f, 828.5f, 828.5f)
+                        quadTo(817f, 840f, 800f, 840f)
+                        lineTo(160f, 840f)
+                        close()
+                        moveTo(280f, 760f)
+                        lineTo(680f, 760f)
+                        lineTo(680f, 200f)
+                        quadTo(680f, 200f, 680f, 200f)
+                        quadTo(680f, 200f, 680f, 200f)
+                        lineTo(280f, 200f)
+                        quadTo(280f, 200f, 280f, 200f)
+                        quadTo(280f, 200f, 280f, 200f)
+                        lineTo(280f, 760f)
+                        close()
+                        moveTo(560f, 520f)
+                        quadTo(577f, 520f, 588.5f, 508.5f)
+                        quadTo(600f, 497f, 600f, 480f)
+                        quadTo(600f, 463f, 588.5f, 451.5f)
+                        quadTo(577f, 440f, 560f, 440f)
+                        quadTo(543f, 440f, 531.5f, 451.5f)
+                        quadTo(520f, 463f, 520f, 480f)
+                        quadTo(520f, 497f, 531.5f, 508.5f)
+                        quadTo(543f, 520f, 560f, 520f)
+                        close()
+                        moveTo(280f, 200f)
+                        lineTo(280f, 200f)
+                        quadTo(280f, 200f, 280f, 200f)
+                        quadTo(280f, 200f, 280f, 200f)
+                        lineTo(280f, 760f)
+                        lineTo(280f, 760f)
+                        lineTo(280f, 200f)
+                        quadTo(280f, 200f, 280f, 200f)
+                        quadTo(280f, 200f, 280f, 200f)
+                        close()
+                    }
+                }
+                .build()
+
+        return _DoorFront!!
+    }
+
+@Suppress("ObjectPropertyName") private var _DoorFront: ImageVector? = null

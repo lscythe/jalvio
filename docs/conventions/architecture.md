@@ -48,6 +48,16 @@ Metro wires everything at compile time:
 - Flavor-only modules replace defaults with `replaces = [...]`: `FirebaseAnalyticsHelper` replaces `NoOpAnalyticsHelper` and `SentryMonitor` replaces `KermitMonitor`.
 - `app/shared` declares `JalvioGraph` (the accessors) and the hosts declare the real graphs, `AndroidAppGraph` and `IosAppGraph`. Metro only sees contributions on the classpath where a graph is compiled, so compiling it per Android variant lets each distribution resolve its own replacements.
 
+## Design system
+
+The design follows Material 3 Expressive, so features use its stock components as they are and import `material3` directly. `core:designsystem` never wraps them. It holds:
+
+- The theme: `JalvioTheme(ThemeSettings)` builds the color scheme with MaterialKolor (or the phone's dynamic colors on Android 12 and later) and sets the Roboto Flex typography, shapes and motion.
+- Tokens Material has no slot for: `JalvioTheme.colors` (crowd and info meaning colors), `RouteTone`, `JalvioShapes`, `JalvioElevation` and the `JalvioIcons` pack.
+- Components Material lacks, and only those.
+
+Previews use `@JalvioPreviews`. `core:testing-screenshot` does not depend on the design system, so screenshot tests that need the Jalvio look wrap their content in `JalvioTheme(settings)` themselves. Code and copy use US spelling, such as "color".
+
 ## Data flow
 
 Static network:

@@ -31,7 +31,7 @@ Kotest specs do not run under the Robolectric runner, so anything that needs Rob
 
 ## Screenshots
 
-`captureScreenshot(name, darkTheme) { ... }` from `core:testing-screenshot` wraps content in `JalvioTheme` and a `Surface` and writes `src/androidHostTest/screenshots/<name>.png`. Screenshot tests run under Robolectric with `@GraphicsMode(GraphicsMode.Mode.NATIVE)`. Every `Screen` gets light and dark screenshots for each of its states.
+`captureScreenshot(name, darkTheme) { ... }` from `core:testing-screenshot` wraps content in the default `MaterialTheme` and a `Surface` and writes `src/androidHostTest/screenshots/<name>.png`. Screenshot tests run under Robolectric with `@GraphicsMode(GraphicsMode.Mode.NATIVE)`. Every `Screen` gets light and dark screenshots for each of its states.
 
 ```sh
 mise run screenshots                            # record baselines

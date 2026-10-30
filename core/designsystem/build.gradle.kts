@@ -16,17 +16,34 @@
 plugins {
     alias(libs.plugins.jalvio.multiplatform.library)
     alias(libs.plugins.jalvio.multiplatform.library.compose)
+    alias(libs.plugins.jalvio.robolectric)
+    alias(libs.plugins.roborazzi)
 }
 
 kotlin {
-    android { namespace = "dev.lscythe.app.jalvio.core.designsystem" }
+    android {
+        namespace = "dev.lscythe.app.jalvio.core.designsystem"
+        androidResources.enable = true
+    }
 
     sourceSets {
         commonMain.dependencies {
             api(libs.compose.multiplatform.runtime)
+            api(libs.compose.multiplatform.material3)
             implementation(libs.compose.multiplatform.foundation)
-            implementation(libs.compose.multiplatform.material3)
+            implementation(libs.compose.multiplatform.resources)
             implementation(libs.materialKolor.material3)
         }
+        androidMain.dependencies { implementation(libs.compose.multiplatform.ui.tooling.preview) }
+        commonTest.dependencies { implementation(project(":core:testing")) }
+        getByName("androidHostTest").dependencies {
+            implementation(project(":core:testing-screenshot"))
+            implementation(libs.androidx.compose.ui.testJunit4)
+            implementation(libs.androidx.compose.ui.testManifest)
+        }
     }
+}
+
+compose.resources {
+    packageOfResClass = "dev.lscythe.app.jalvio.core.designsystem.generated.resources"
 }
