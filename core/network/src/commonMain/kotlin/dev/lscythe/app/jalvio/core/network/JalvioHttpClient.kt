@@ -18,6 +18,7 @@ package dev.lscythe.app.jalvio.core.network
 import co.touchlab.kermit.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -35,6 +36,7 @@ fun createJalvioHttpClient(engine: HttpClientEngine, baseUrl: ApiBaseUrl): HttpC
             json(JalvioJson, ContentType.Application.Json)
             json(JalvioJson, ContentType.Application.ProblemJson)
         }
+        install(ContentEncoding) { gzip() }
         install(WebSockets)
         install(Logging) {
             level = LogLevel.INFO
