@@ -44,6 +44,8 @@ rootProject.name = "Jalvio"
 
 include(":app:android", ":app:ios", ":app:shared")
 
+include(":api:catalog")
+
 include(
     ":core:analytics",
     ":core:analytics-firebase",
