@@ -35,6 +35,8 @@ Kotest specs do not run under the Robolectric runner, so anything that needs Rob
 
 Content with an infinite animation, such as a blinking dot or a progress indicator, never lets Compose go idle, so `captureScreenshot { ... }` keeps advancing frames and the test stalls. Render it with `createComposeRule()`, set `mainClock.autoAdvance = false`, and capture with `composeRule.onRoot().captureScreenshot(name)`; `mainClock.advanceTimeBy` then captures later frames.
 
+Every component and every screen also goes through the phone matrix: `Phone.Small` (320 x 640 dp), `Medium` (360 x 800) and `Large` (430 x 932) at font scale 1, plus `SmallLargeFont` (320 x 640 dp at font scale 2). Run the test class with `ParameterizedRobolectricTestRunner` and `@Config(qualifiers = LargestPhoneWindow)`, take a `Phone` in the constructor, return `Phone.parameters()` from the `@Parameters` function, and capture with `composeRule.capturePhoneScreenshot(name, phone) { ... }` (or `captureOnPhone` with your own theme). The helper lays the content out in a box the size of the phone, applies the font scale through `LocalDensity`, pauses the clock so animations stay on their first frame, and writes `<name>_small`, `_medium`, `_large` and `_small_font2x`. Use it instead of `captureRoboImage` with Roborazzi's size options, which captured blank images at random. The small phone at font scale 2 is the case that breaks layouts, so check it first. Measure layout in tests with `@GraphicsMode(GraphicsMode.Mode.NATIVE)`: the legacy mode measures text with fake metrics.
+
 Dialogs and modal sheets open their own window, which `captureRoboImage` does not see. Show them from `createComposeRule()` and capture the whole screen with `captureScreenScreenshot(name)`.
 
 ```sh

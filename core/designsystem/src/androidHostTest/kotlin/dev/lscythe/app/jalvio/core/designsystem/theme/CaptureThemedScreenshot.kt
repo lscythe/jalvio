@@ -17,6 +17,9 @@ package dev.lscythe.app.jalvio.core.designsystem.theme
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import dev.lscythe.app.jalvio.core.testing.screenshot.Phone
+import dev.lscythe.app.jalvio.core.testing.screenshot.captureOnPhone
 import dev.lscythe.app.jalvio.core.testing.screenshot.captureScreenshot
 
 internal fun captureThemedScreenshot(
@@ -24,3 +27,12 @@ internal fun captureThemedScreenshot(
     settings: ThemeSettings,
     content: @Composable () -> Unit,
 ) = captureScreenshot(name) { JalvioTheme(settings) { Surface(content = content) } }
+
+internal fun ComposeContentTestRule.captureThemedPhoneScreenshot(
+    name: String,
+    phone: Phone,
+    content: @Composable () -> Unit,
+) =
+    captureOnPhone(name, phone) {
+        JalvioTheme(ThemeSettings(mode = ThemeMode.Light)) { Surface(content = content) }
+    }

@@ -48,10 +48,16 @@ class JalvioDialogScreenshotTest {
     @Test fun primaryLight() = capture("Dialog_primary_light", DialogTone.Primary, ThemeMode.Light)
 
     @Test
-    fun errorLargeFont() {
+    @Config(qualifiers = "w320dp-h640dp")
+    fun errorSmallPhoneLargeFont() {
         RuntimeEnvironment.setFontScale(2f)
-        capture("Dialog_error_font2x", DialogTone.Error, ThemeMode.Light)
+        capture("Dialog_error_small_font2x", DialogTone.Error, ThemeMode.Light)
     }
+
+    @Test
+    @Config(qualifiers = "w640dp-h320dp")
+    fun errorSmallPhoneSideways() =
+        capture("Dialog_error_small_sideways", DialogTone.Error, ThemeMode.Light)
 
     private fun capture(name: String, tone: DialogTone, mode: ThemeMode) {
         composeRule.setContent {

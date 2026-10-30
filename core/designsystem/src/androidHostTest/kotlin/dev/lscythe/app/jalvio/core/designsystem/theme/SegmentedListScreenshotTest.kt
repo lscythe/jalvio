@@ -19,7 +19,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
 import dev.lscythe.app.jalvio.core.designsystem.component.RouteBadge
 import dev.lscythe.app.jalvio.core.designsystem.component.RouteBadgeSize
@@ -44,8 +49,13 @@ import dev.lscythe.app.jalvio.core.designsystem.icon.BusFilled
 import dev.lscythe.app.jalvio.core.designsystem.icon.ChevronRight
 import dev.lscythe.app.jalvio.core.designsystem.icon.JalvioIcons
 import dev.lscythe.app.jalvio.core.designsystem.icon.LocationOnFilled
+import dev.lscythe.app.jalvio.core.testing.screenshot.LargestPhoneWindow
+import dev.lscythe.app.jalvio.core.testing.screenshot.Phone
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -57,18 +67,51 @@ class SegmentedListScreenshotTest {
     @Test
     fun settingsAndSearchLists() =
         mapOf("light" to ThemeMode.Light, "dark" to ThemeMode.Dark).forEach { (name, mode) ->
-            captureThemedScreenshot("SegmentedList_$name", ThemeSettings(mode = mode)) {
-                Column(
-                    Modifier.background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(24.dp),
-                ) {
-                    SettingsList()
-                    SearchResults()
-                }
-            }
+            captureThemedScreenshot("SegmentedList_$name", ThemeSettings(mode = mode)) { Samples() }
         }
 }
+
+@RunWith(ParameterizedRobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(qualifiers = LargestPhoneWindow)
+class SegmentedListPhoneScreenshotTest(private val phone: Phone) {
+    @get:Rule val composeRule = createComposeRule()
+
+    @Test
+    fun settings() =
+        composeRule.captureThemedPhoneScreenshot("SegmentedList_settings_phones", phone) {
+            Backdrop { SettingsList() }
+        }
+
+    @Test
+    fun search() =
+        composeRule.captureThemedPhoneScreenshot("SegmentedList_search_phones", phone) {
+            Backdrop { SearchResults() }
+        }
+
+    companion object {
+        @JvmStatic @Parameters(name = "{0}") fun phones() = Phone.parameters()
+    }
+}
+
+@Composable
+private fun Samples() =
+    Backdrop(Arrangement.spacedBy(24.dp)) {
+        SettingsList()
+        SearchResults()
+    }
+
+@Composable
+private fun Backdrop(
+    arrangement: Arrangement.Vertical = Arrangement.Top,
+    content: @Composable ColumnScope.() -> Unit,
+) =
+    Column(
+        Modifier.background(MaterialTheme.colorScheme.surfaceContainerHighest)
+            .padding(JalvioLayout.screenMargin),
+        verticalArrangement = arrangement,
+        content = content,
+    )
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -108,13 +151,13 @@ private fun SettingsList() =
 @Composable
 private fun ClockChoice() =
     Row(
-        Modifier.padding(top = 8.dp),
+        Modifier.padding(top = 8.dp).height(IntrinsicSize.Min),
         horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
     ) {
         ToggleButton(
             checked = false,
             onCheckedChange = {},
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).fillMaxHeight(),
             shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
         ) {
             Text("9:41 PM")
@@ -122,7 +165,7 @@ private fun ClockChoice() =
         ToggleButton(
             checked = true,
             onCheckedChange = {},
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).fillMaxHeight(),
             shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
         ) {
             Text("21:41")

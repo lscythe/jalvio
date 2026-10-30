@@ -34,6 +34,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
@@ -46,6 +47,17 @@ class JalvioModalSheetScreenshotTest {
     @Test fun floatingLight() = capture("ModalSheet_light", ThemeMode.Light)
 
     @Test fun floatingDark() = capture("ModalSheet_dark", ThemeMode.Dark)
+
+    @Test
+    @Config(qualifiers = "w320dp-h640dp")
+    fun smallPhoneLargeFont() {
+        RuntimeEnvironment.setFontScale(2f)
+        capture("ModalSheet_small_font2x", ThemeMode.Light)
+    }
+
+    @Test
+    @Config(qualifiers = "w640dp-h320dp")
+    fun smallPhoneSideways() = capture("ModalSheet_small_sideways", ThemeMode.Light)
 
     @OptIn(ExperimentalMaterial3Api::class)
     private fun capture(name: String, mode: ThemeMode) {
