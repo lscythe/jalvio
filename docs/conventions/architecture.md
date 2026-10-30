@@ -27,7 +27,7 @@ Domain and data modules are named after business concepts (`catalog`, `live`, `p
 | `feature/x/impl` | `feature/*/api`, `domain/*`, `core:{ui,designsystem,navigation,resources,common,permissions,location,map,analytics}` |
 | `feature/x/api` | `core:navigation` |
 | `domain/x` | `domain/*`, `core:common` |
-| `data/x` | its own `domain/x`, `api/*`, `core:{network,database,datastore,location,common}` |
+| `data/x` | its own `domain/x`, `api/*`, `core:{network,database,datastore,location,sync,common}` |
 | `api/x` | `core:network` |
 | `core:*` | `core:*` |
 | `app/*` | anything |
@@ -47,6 +47,16 @@ Metro wires everything at compile time:
 - Implementations are `internal` and contributed with `@ContributesBinding(AppScope::class)` to a public interface.
 - Flavor-only modules replace defaults with `replaces = [...]`: `FirebaseAnalyticsHelper` replaces `NoOpAnalyticsHelper` and `SentryMonitor` replaces `KermitMonitor`.
 - `app/shared` declares `JalvioGraph` (the accessors) and the hosts declare the real graphs, `AndroidAppGraph` and `IosAppGraph`. Metro only sees contributions on the classpath where a graph is compiled, so compiling it per Android variant lets each distribution resolve its own replacements.
+
+## Sync
+
+Data that the device keeps and refreshes is synced through `core:sync`. A data module says only how to sync, by contributing a `Syncable` into the Metro set; it never schedules work itself. `SyncEngine` runs every `Syncable` in parallel, lets overlapping requests share one run, and records `SyncOutcome.Failed` to `Monitor`.
+
+When sync runs is the engine's job:
+
+- **App launch** calls `SyncEngine.requestSync()`. On Android this enqueues unique one-time WorkManager work that needs a network connection and backs off on retry. On iOS it runs in the application scope and retries when `NetworkMonitor.isOnline` turns true, backing off from 30 seconds for at most five retries.
+- **Daily**, a WorkManager periodic job on Android and a `BGAppRefreshTask` on iOS run the engine.
+- **Retry buttons** go through a concept's own interface, such as `CatalogSync.retry()`, because features cannot depend on `core:sync`.
 
 ## Design system
 
