@@ -18,13 +18,39 @@ package dev.lscythe.app.jalvio
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.core.view.WindowCompat
+import androidx.core.view.doOnPreDraw
 
 class MainActivity : ComponentActivity() {
+    private var systemSplashGone by mutableStateOf(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen().setOnExitAnimationListener(::removeSystemSplash)
         super.onCreate(savedInstanceState)
         WindowCompat.enableEdgeToEdge(window)
+        window.decorView.doOnPreDraw { decor ->
+            decor.postDelayed({ systemSplashGone = true }, SystemSplashTimeoutMillis)
+        }
         val graph = (application as JalvioApplication).graph
-        setContent { JalvioApp(graph) }
+        setContent { JalvioApp(graph, splashStarted = systemSplashGone) }
+    }
+
+    private fun removeSystemSplash(splash: SplashScreenViewProvider) {
+        val iconEnd = splash.iconAnimationStartMillis + splash.iconAnimationDurationMillis
+        val remaining = (iconEnd - System.currentTimeMillis()).coerceAtLeast(0)
+        splash.view.postDelayed(
+            {
+                splash.remove()
+                systemSplashGone = true
+            },
+            remaining,
+        )
     }
 }
+
+private const val SystemSplashTimeoutMillis = 1_000L

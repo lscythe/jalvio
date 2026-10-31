@@ -204,7 +204,7 @@ private fun rememberZLetters(): Pair<TextLayoutResult, TextLayoutResult> {
 private fun lerp(from: List<Offset>, to: List<Offset>, fraction: Float): List<Offset> =
     from.zip(to) { start, stop -> start + (stop - start) * fraction }
 
-private fun outlinePath(points: List<Offset>, box: Rect): Path =
+internal fun outlinePath(points: List<Offset>, box: Rect): Path =
     Path().apply {
         points.forEachIndexed { index, point ->
             val x = box.left + point.x * box.width

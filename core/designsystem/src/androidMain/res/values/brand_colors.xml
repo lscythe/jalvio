@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="jalvio_icon_background">#006D48</color>
+    <color name="jalvio_icon_hook">#FFFFFF</color>
+    <color name="jalvio_jali_body">#7FABFA</color>
+    <color name="jalvio_jali_eyes">#002B5E</color>
+    <color name="jalvio_splash_background">#F9F9FF</color>
+</resources>
