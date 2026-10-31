@@ -18,7 +18,6 @@ package dev.lscythe.app.jalvio.di
 import android.app.Application
 import android.content.Context
 import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
-import dev.lscythe.app.jalvio.core.sync.SyncEngine
 import dev.lscythe.app.jalvio.core.sync.work.DailySync
 import dev.lscythe.app.jalvio.core.sync.work.SyncWorkerFactory
 import dev.zacsweers.metro.AppScope
@@ -28,7 +27,6 @@ import dev.zacsweers.metro.Provides
 
 @DependencyGraph(AppScope::class)
 interface AndroidAppGraph : JalvioGraph {
-    val syncEngine: SyncEngine
     val syncWorkerFactory: SyncWorkerFactory
     val dailySync: DailySync
 

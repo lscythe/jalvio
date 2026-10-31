@@ -25,11 +25,18 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            api(project(":api:catalog"))
             api(project(":core:analytics"))
             api(project(":core:common"))
+            api(project(":core:database"))
+            api(project(":core:datastore"))
+            api(project(":core:location"))
             api(project(":core:map"))
             api(project(":core:monitoring"))
             api(project(":core:network"))
+            api(project(":core:sync"))
+            api(project(":data:catalog"))
+            api(project(":domain:catalog"))
             api(libs.compose.multiplatform.runtime)
             implementation(project(":core:designsystem"))
             implementation(libs.compose.multiplatform.foundation)

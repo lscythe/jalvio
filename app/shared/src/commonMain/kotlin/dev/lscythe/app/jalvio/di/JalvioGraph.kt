@@ -17,8 +17,14 @@ package dev.lscythe.app.jalvio.di
 
 import dev.lscythe.app.jalvio.core.analytics.AnalyticsHelper
 import dev.lscythe.app.jalvio.core.monitoring.Monitor
+import dev.lscythe.app.jalvio.core.sync.SyncEngine
+import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
+import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
 
 interface JalvioGraph {
     val analyticsHelper: AnalyticsHelper
     val monitor: Monitor
+    val syncEngine: SyncEngine
+    val catalogSync: CatalogSync
+    val catalogRepository: CatalogRepository
 }

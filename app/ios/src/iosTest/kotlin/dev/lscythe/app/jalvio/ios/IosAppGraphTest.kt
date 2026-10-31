@@ -18,8 +18,13 @@ package dev.lscythe.app.jalvio.ios
 import dev.lscythe.app.jalvio.core.analytics.NoOpAnalyticsHelper
 import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
 import dev.lscythe.app.jalvio.core.monitoring.KermitMonitor
+import dev.lscythe.app.jalvio.core.sync.SyncEngine
+import dev.lscythe.app.jalvio.core.sync.di.SyncBindings
+import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
+import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
 import dev.zacsweers.metro.createGraphFactory
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class IosAppGraphTest :
@@ -30,6 +35,12 @@ class IosAppGraphTest :
             Then("analytics is no-op and monitoring is Kermit") {
                 graph.analyticsHelper.shouldBeInstanceOf<NoOpAnalyticsHelper>()
                 graph.monitor.shouldBeInstanceOf<KermitMonitor>()
+            }
+            Then("the catalog syncs through the engine") {
+                graph.catalogSync.shouldBeInstanceOf<CatalogSync>()
+                graph.catalogRepository.shouldBeInstanceOf<CatalogRepository>()
+                graph.syncEngine.shouldBeInstanceOf<SyncEngine>()
+                (graph as SyncBindings).syncables.map { it.name } shouldContain "catalog"
             }
         }
     })
