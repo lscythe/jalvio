@@ -16,6 +16,7 @@
 plugins {
     alias(libs.plugins.jalvio.multiplatform.library)
     alias(libs.plugins.jalvio.metro)
+    alias(libs.plugins.jalvio.robolectric)
 }
 
 kotlin {
@@ -29,9 +30,11 @@ kotlin {
             implementation(project(":core:monitoring"))
             implementation(project(":core:network"))
         }
+        androidMain.dependencies { implementation(libs.androidx.work.runtime) }
         commonTest.dependencies {
             implementation(project(":core:testing"))
             implementation(libs.turbine)
         }
+        getByName("androidHostTest").dependencies { implementation(libs.androidx.work.testing) }
     }
 }

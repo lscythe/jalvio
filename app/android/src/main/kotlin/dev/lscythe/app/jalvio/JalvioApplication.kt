@@ -16,11 +16,12 @@
 package dev.lscythe.app.jalvio
 
 import android.app.Application
+import androidx.work.Configuration
 import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
 import dev.lscythe.app.jalvio.di.AndroidAppGraph
 import dev.zacsweers.metro.createGraphFactory
 
-class JalvioApplication : Application() {
+class JalvioApplication : Application(), Configuration.Provider {
     val environment: BuildEnvironment =
         if (BuildConfig.DEBUG) BuildEnvironment.Debug else BuildEnvironment.Release
 
@@ -28,8 +29,13 @@ class JalvioApplication : Application() {
         createGraphFactory<AndroidAppGraph.Factory>().create(this, environment)
     }
 
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder().setWorkerFactory(graph.syncWorkerFactory).build()
+
     override fun onCreate() {
         super.onCreate()
         initializeMonitoring(environment)
+        graph.dailySync.schedule()
+        graph.syncEngine.requestSync()
     }
 }
