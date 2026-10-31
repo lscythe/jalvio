@@ -36,11 +36,14 @@ kotlin {
             api(project(":core:network"))
             api(project(":core:sync"))
             api(project(":data:catalog"))
+            api(project(":data:preferences"))
             api(project(":domain:catalog"))
+            api(project(":domain:preferences"))
             api(libs.compose.multiplatform.runtime)
             implementation(project(":core:designsystem"))
             implementation(libs.compose.multiplatform.foundation)
             implementation(libs.compose.multiplatform.material3)
         }
+        commonTest.dependencies { implementation(project(":core:testing")) }
     }
 }

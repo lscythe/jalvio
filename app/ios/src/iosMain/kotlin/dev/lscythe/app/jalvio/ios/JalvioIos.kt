@@ -29,7 +29,10 @@ object JalvioIos {
         createGraphFactory<IosAppGraph.Factory>().create(environment)
     }
 
-    fun start() = graph.syncEngine.requestSync()
+    fun start() {
+        graph.consentEnforcer.start()
+        graph.syncEngine.requestSync()
+    }
 
     suspend fun backgroundSync(): Boolean = graph.syncEngine.syncNow() == SyncOutcome.Done
 }

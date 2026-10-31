@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.lscythe.app.jalvio
+package dev.lscythe.app.jalvio.core.analytics.firebase
 
-import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
-import dev.lscythe.app.jalvio.core.monitoring.sentry.SentryConfig
-import dev.lscythe.app.jalvio.core.monitoring.sentry.initializeSentry
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.analytics.analytics
 
-internal fun initializeMonitoring(environment: BuildEnvironment) {
-    initializeSentry(SentryConfig(dsn = BuildConfig.SENTRY_DSN, environment = environment))
+fun setFirebaseAnalyticsCollectionEnabled(enabled: Boolean) {
+    Firebase.analytics.setAnalyticsCollectionEnabled(enabled)
 }

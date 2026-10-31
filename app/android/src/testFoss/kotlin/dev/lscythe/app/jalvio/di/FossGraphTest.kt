@@ -23,8 +23,10 @@ import dev.lscythe.app.jalvio.core.sync.SyncEngine
 import dev.lscythe.app.jalvio.core.sync.di.SyncBindings
 import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
 import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
+import dev.lscythe.app.jalvio.domain.preferences.model.ConsentOptions
 import dev.zacsweers.metro.createGraphFactory
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -55,5 +57,14 @@ class FossGraphTest {
         graph.catalogRepository.shouldBeInstanceOf<CatalogRepository>()
         graph.syncEngine.shouldBeInstanceOf<SyncEngine>()
         (graph as SyncBindings).syncables.map { it.name } shouldContain "catalog"
+    }
+
+    @Test
+    fun noConsentIsOffered() {
+        val graph =
+            createGraphFactory<AndroidAppGraph.Factory>()
+                .create(RuntimeEnvironment.getApplication(), BuildEnvironment.Debug)
+
+        graph.consentOptions shouldBe ConsentOptions.None
     }
 }

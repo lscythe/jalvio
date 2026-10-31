@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.lscythe.app.jalvio
+package dev.lscythe.app.jalvio.di
 
-import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
-import dev.lscythe.app.jalvio.core.monitoring.sentry.SentryConfig
-import dev.lscythe.app.jalvio.core.monitoring.sentry.initializeSentry
+import dev.lscythe.app.jalvio.domain.preferences.model.ConsentOptions
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
 
-internal fun initializeMonitoring(environment: BuildEnvironment) {
-    initializeSentry(SentryConfig(dsn = BuildConfig.SENTRY_DSN, environment = environment))
+@ContributesTo(AppScope::class)
+@BindingContainer
+object ConsentOptionsBindings {
+    @Provides fun provideConsentOptions(): ConsentOptions = ConsentOptions.None
 }

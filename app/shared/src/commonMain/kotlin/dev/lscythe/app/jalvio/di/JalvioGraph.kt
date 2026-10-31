@@ -15,11 +15,14 @@
  */
 package dev.lscythe.app.jalvio.di
 
+import dev.lscythe.app.jalvio.consent.ConsentEnforcer
 import dev.lscythe.app.jalvio.core.analytics.AnalyticsHelper
 import dev.lscythe.app.jalvio.core.monitoring.Monitor
 import dev.lscythe.app.jalvio.core.sync.SyncEngine
 import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
 import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
+import dev.lscythe.app.jalvio.domain.preferences.UserPreferencesRepository
+import dev.lscythe.app.jalvio.domain.preferences.model.ConsentOptions
 
 interface JalvioGraph {
     val analyticsHelper: AnalyticsHelper
@@ -27,4 +30,7 @@ interface JalvioGraph {
     val syncEngine: SyncEngine
     val catalogSync: CatalogSync
     val catalogRepository: CatalogRepository
+    val userPreferencesRepository: UserPreferencesRepository
+    val consentOptions: ConsentOptions
+    val consentEnforcer: ConsentEnforcer
 }

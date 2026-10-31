@@ -22,9 +22,11 @@ import dev.lscythe.app.jalvio.core.sync.SyncEngine
 import dev.lscythe.app.jalvio.core.sync.di.SyncBindings
 import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
 import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
+import dev.lscythe.app.jalvio.domain.preferences.model.ConsentOptions
 import dev.zacsweers.metro.createGraphFactory
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class IosAppGraphTest :
@@ -42,5 +44,6 @@ class IosAppGraphTest :
                 graph.syncEngine.shouldBeInstanceOf<SyncEngine>()
                 (graph as SyncBindings).syncables.map { it.name } shouldContain "catalog"
             }
+            Then("no consent is offered") { graph.consentOptions shouldBe ConsentOptions.None }
         }
     })

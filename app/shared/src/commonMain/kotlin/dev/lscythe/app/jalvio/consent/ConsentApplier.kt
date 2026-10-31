@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.lscythe.app.jalvio
+package dev.lscythe.app.jalvio.consent
 
-import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
+import dev.lscythe.app.jalvio.domain.preferences.model.PrivacyConsent
 
-internal fun initializeMonitoring(environment: BuildEnvironment) = Unit
+fun interface ConsentApplier {
+    fun apply(consent: PrivacyConsent)
+}
