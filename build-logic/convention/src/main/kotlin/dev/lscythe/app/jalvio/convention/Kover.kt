@@ -58,6 +58,8 @@ private val platformAdapterClasses =
         "dev.lscythe.app.jalvio.core.network.monitor.ConnectivityManagerNetworkMonitor*",
         "dev.lscythe.app.jalvio.core.permissions.AndroidPermissionRequester*",
         "dev.lscythe.app.jalvio.core.permissions.PermissionRequester_androidKt",
+        "dev.lscythe.app.jalvio.core.sync.work.DailySync",
+        "dev.lscythe.app.jalvio.core.sync.work.WorkManagerSyncRequester",
         "dev.lscythe.app.jalvio.core.ui.jank.ViewJankStateRecorder*",
     )
 

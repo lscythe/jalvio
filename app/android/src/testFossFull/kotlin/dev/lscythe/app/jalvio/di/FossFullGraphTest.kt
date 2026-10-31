@@ -19,7 +19,12 @@ import android.app.Application
 import dev.lscythe.app.jalvio.core.analytics.NoOpAnalyticsHelper
 import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
 import dev.lscythe.app.jalvio.core.monitoring.KermitMonitor
+import dev.lscythe.app.jalvio.core.sync.SyncEngine
+import dev.lscythe.app.jalvio.core.sync.di.SyncBindings
+import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
+import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
 import dev.zacsweers.metro.createGraphFactory
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldNotBeInstanceOf
 import org.junit.Test
@@ -39,5 +44,17 @@ class FossFullGraphTest {
 
         graph.analyticsHelper.shouldBeInstanceOf<NoOpAnalyticsHelper>()
         graph.monitor.shouldNotBeInstanceOf<KermitMonitor>()
+    }
+
+    @Test
+    fun theCatalogSyncsThroughTheEngine() {
+        val graph =
+            createGraphFactory<AndroidAppGraph.Factory>()
+                .create(RuntimeEnvironment.getApplication(), BuildEnvironment.Debug)
+
+        graph.catalogSync.shouldBeInstanceOf<CatalogSync>()
+        graph.catalogRepository.shouldBeInstanceOf<CatalogRepository>()
+        graph.syncEngine.shouldBeInstanceOf<SyncEngine>()
+        (graph as SyncBindings).syncables.map { it.name } shouldContain "catalog"
     }
 }
