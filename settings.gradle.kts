@@ -49,6 +49,7 @@ include(
     ":domain:catalog",
     ":domain:preferences",
     ":data:catalog",
+    ":data:preferences",
 )
 
 include(
