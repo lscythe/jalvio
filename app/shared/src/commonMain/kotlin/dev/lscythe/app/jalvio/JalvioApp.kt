@@ -15,14 +15,28 @@
  */
 package dev.lscythe.app.jalvio
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import dev.lscythe.app.jalvio.core.designsystem.component.splash.JalvioSplash
 import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioTheme
 import dev.lscythe.app.jalvio.di.JalvioGraph
 
 @Composable
-fun JalvioApp(graph: JalvioGraph) {
-    JalvioTheme { Surface(modifier = Modifier.fillMaxSize()) {} }
+fun JalvioApp(graph: JalvioGraph, splashStarted: Boolean = true) {
+    JalvioTheme {
+        Box(Modifier.fillMaxSize()) {
+            Surface(modifier = Modifier.fillMaxSize()) {}
+            var splashVisible by rememberSaveable { mutableStateOf(true) }
+            if (splashVisible) {
+                JalvioSplash(started = splashStarted, onFinished = { splashVisible = false })
+            }
+        }
+    }
 }

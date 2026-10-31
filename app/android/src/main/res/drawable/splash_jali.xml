@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="288"
+    android:viewportHeight="288"
+    tools:ignore="VectorRaster">
+    <group
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:translateX="69"
+        android:translateY="69">
+        <group
+            android:name="grow"
+            android:pivotX="50"
+            android:pivotY="90">
+            <group
+                android:name="spin"
+                android:pivotX="50"
+                android:pivotY="50">
+                <path
+                    android:name="body"
+                    android:fillColor="@color/jalvio_jali_body"
+                    android:pathData="M50.00,0.00L53.25,0.44L56.36,1.67L59.27,3.41L61.97,5.33L64.57,7.07L67.22,8.43L70.05,9.34L73.12,9.95L76.39,10.51L79.68,11.32L82.75,12.66L85.36,14.64L87.34,17.25L88.68,20.32L89.49,23.61L90.05,26.87L90.66,29.95L91.57,32.78L92.93,35.43L94.67,38.03L96.59,40.73L98.33,43.64L99.56,46.75L100.00,50.00L99.56,53.25L98.33,56.36L96.59,59.27L94.67,61.97L92.93,64.57L91.57,67.22L90.66,70.05L90.05,73.12L89.49,76.39L88.68,79.68L87.34,82.75L85.36,85.36L82.75,87.34L79.68,88.68L76.39,89.49L73.12,90.05L70.05,90.66L67.22,91.57L64.57,92.93L61.97,94.67L59.27,96.59L56.36,98.33L53.25,99.56L50.00,100.00L46.75,99.56L43.64,98.33L40.73,96.59L38.03,94.67L35.43,92.93L32.78,91.57L29.95,90.66L26.87,90.05L23.61,89.49L20.32,88.68L17.25,87.34L14.64,85.36L12.66,82.75L11.32,79.68L10.51,76.39L9.95,73.13L9.34,70.05L8.43,67.22L7.07,64.57L5.33,61.97L3.41,59.27L1.67,56.36L0.44,53.25L0.00,50.00L0.44,46.75L1.67,43.64L3.41,40.73L5.33,38.03L7.07,35.43L8.43,32.78L9.34,29.95L9.95,26.87L10.51,23.61L11.32,20.32L12.66,17.25L14.64,14.64L17.25,12.66L20.32,11.32L23.61,10.51L26.87,9.95L29.95,9.34L32.78,8.43L35.43,7.07L38.03,5.33L40.73,3.41L43.64,1.67L46.75,0.44Z" />
+            </group>
+            <group
+                android:name="eyes"
+                android:pivotY="50">
+                <path
+                    android:fillColor="@color/jalvio_jali_eyes"
+                    android:pathData="M34.5,46.5A3.5,3.5 0,0 1,41.5,46.5V53.5A3.5,3.5 0,0 1,34.5,53.5ZM58.5,46.5A3.5,3.5 0,0 1,65.5,46.5V53.5A3.5,3.5 0,0 1,58.5,53.5Z" />
+            </group>
+        </group>
+    </group>
+</vector>

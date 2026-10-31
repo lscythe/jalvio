@@ -31,6 +31,10 @@ object JalvioSeeds {
     val NeutralVariant = Color(0xFF5477B5)
 }
 
+internal val JalvioBrandScheme: ColorScheme by lazy {
+    jalvioColorScheme(ThemeSettings(), dark = false, platformScheme = null)
+}
+
 fun jalvioColorScheme(
     settings: ThemeSettings,
     dark: Boolean,

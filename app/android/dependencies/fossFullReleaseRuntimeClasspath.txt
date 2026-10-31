@@ -4,6 +4,7 @@ androidx.activity:activity:1.14.0-alpha03
 androidx.annotation:annotation-experimental:1.5.0
 androidx.annotation:annotation-jvm:1.10.0
 androidx.annotation:annotation:1.10.0
+androidx.appcompat:appcompat-resources:1.7.0
 androidx.arch.core:core-common:2.2.0
 androidx.arch.core:core-runtime:2.2.0
 androidx.autofill:autofill:1.0.0
@@ -49,6 +50,7 @@ androidx.compose.ui:ui:1.13.0-beta01
 androidx.concurrent:concurrent-futures-ktx:1.1.0
 androidx.concurrent:concurrent-futures:1.1.0
 androidx.core:core-ktx:1.19.1
+androidx.core:core-splashscreen:1.2.0
 androidx.core:core-viewtree:1.0.0
 androidx.core:core:1.19.1
 androidx.customview:customview-poolingcontainer:1.0.0
@@ -114,6 +116,8 @@ androidx.startup:startup-runtime:1.2.0
 androidx.tracing:tracing-android:2.0.1
 androidx.tracing:tracing-ktx:2.0.1
 androidx.tracing:tracing:2.0.1
+androidx.vectordrawable:vectordrawable-animated:1.1.0
+androidx.vectordrawable:vectordrawable:1.1.0
 androidx.versionedparcelable:versionedparcelable:1.1.1
 androidx.window:window-core-android:1.5.0
 androidx.window:window-core:1.5.0
