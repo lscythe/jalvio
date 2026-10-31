@@ -52,6 +52,8 @@ include(
     ":data:preferences",
 )
 
+include(":feature:onboarding:api", ":feature:onboarding:impl")
+
 include(
     ":core:analytics",
     ":core:analytics-firebase",
