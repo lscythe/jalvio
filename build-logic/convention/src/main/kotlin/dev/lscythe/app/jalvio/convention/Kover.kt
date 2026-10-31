@@ -50,8 +50,7 @@ private val platformAdapterClasses =
     listOf(
         "dev.lscythe.app.jalvio.core.analytics.firebase.FirebaseAnalyticsHelper",
         "dev.lscythe.app.jalvio.core.common.dispatchers.PlatformIoDispatcher_androidKt",
-        "dev.lscythe.app.jalvio.core.database.DatabaseBuilder_androidKt",
-        "dev.lscythe.app.jalvio.core.database.JalvioDatabaseKt",
+        "dev.lscythe.app.jalvio.core.database.DatabasePathsKt",
         "dev.lscythe.app.jalvio.core.location.LocationManagerLocationProvider*",
         "dev.lscythe.app.jalvio.core.map.JalvioMapKt",
         "dev.lscythe.app.jalvio.core.monitoring.sentry.SentryMonitor",
@@ -59,6 +58,8 @@ private val platformAdapterClasses =
         "dev.lscythe.app.jalvio.core.network.monitor.ConnectivityManagerNetworkMonitor*",
         "dev.lscythe.app.jalvio.core.permissions.AndroidPermissionRequester*",
         "dev.lscythe.app.jalvio.core.permissions.PermissionRequester_androidKt",
+        "dev.lscythe.app.jalvio.core.sync.work.DailySync",
+        "dev.lscythe.app.jalvio.core.sync.work.WorkManagerSyncRequester",
         "dev.lscythe.app.jalvio.core.ui.jank.ViewJankStateRecorder*",
     )
 

@@ -106,6 +106,18 @@ class ModuleBoundaryRulesTest :
                     .shouldBeEmpty()
             }
         }
+        Given("a data module contributing sync work") {
+            Then("it may use core:sync but still not core:monitoring") {
+                boundaryViolations(
+                        listOf(
+                            dep(":data:catalog", ":core:sync"),
+                            dep(":data:catalog", ":core:monitoring"),
+                        )
+                    )
+                    .map { it.substringBefore(" (") } shouldContainExactly
+                    listOf(":data:catalog -> :core:monitoring")
+            }
+        }
         Given("a module referencing itself, as kover does") {
             Then("it is not a violation") {
                 boundaryViolations(

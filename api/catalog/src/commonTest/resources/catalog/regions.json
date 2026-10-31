@@ -1,0 +1,23 @@
+{
+  "regions": [
+    {
+      "id": "jakarta",
+      "name": "Jakarta",
+      "timeZone": "Asia/Jakarta",
+      "bounds": {"southWest": {"lat": -6.45, "lng": 106.6}, "northEast": {"lat": -6.05, "lng": 107.05}},
+      "live": true,
+      "catalog": {"url": "/v1/regions/jakarta/catalog", "version": "W/\"3f2a\"", "updatedAt": "2026-10-30T03:00:00Z"},
+      "shapes": {"url": "/v1/regions/jakarta/catalog/shapes"},
+      "map": {"url": "https://maps.example.test/jakarta.pmtiles", "bytes": 142000000, "updated": "2026-10-30"}
+    },
+    {
+      "id": "bandung",
+      "name": "Bandung",
+      "timeZone": "Asia/Jakarta",
+      "bounds": {"southWest": {"lat": -7.05, "lng": 107.5}, "northEast": {"lat": -6.8, "lng": 107.75}},
+      "live": false,
+      "catalog": {"url": "/v1/regions/bandung/catalog", "version": "W/\"9b1c\""},
+      "shapes": {"url": "/v1/regions/bandung/catalog/shapes"}
+    }
+  ]
+}

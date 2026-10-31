@@ -27,7 +27,7 @@ Domain and data modules are named after business concepts (`catalog`, `live`, `p
 | `feature/x/impl` | `feature/*/api`, `domain/*`, `core:{ui,designsystem,navigation,resources,common,permissions,location,map,analytics}` |
 | `feature/x/api` | `core:navigation` |
 | `domain/x` | `domain/*`, `core:common` |
-| `data/x` | its own `domain/x`, `api/*`, `core:{network,database,datastore,location,common}` |
+| `data/x` | its own `domain/x`, `api/*`, `core:{network,database,datastore,location,sync,common}` |
 | `api/x` | `core:network` |
 | `core:*` | `core:*` |
 | `app/*` | anything |
@@ -46,7 +46,17 @@ Metro wires everything at compile time:
 
 - Implementations are `internal` and contributed with `@ContributesBinding(AppScope::class)` to a public interface.
 - Flavor-only modules replace defaults with `replaces = [...]`: `FirebaseAnalyticsHelper` replaces `NoOpAnalyticsHelper` and `SentryMonitor` replaces `KermitMonitor`.
-- `app/shared` declares `JalvioGraph` (the accessors) and the hosts declare the real graphs, `AndroidAppGraph` and `IosAppGraph`. Metro only sees contributions on the classpath where a graph is compiled, so compiling it per Android variant lets each distribution resolve its own replacements.
+- `app/shared` declares `JalvioGraph` (the accessors) and the hosts declare the real graphs, `AndroidAppGraph` and `IosAppGraph`. Metro only sees contributions on the classpath where a graph is compiled, so compiling it per Android variant lets each distribution resolve its own replacements. For the same reason `app/shared` carries every `api/*`, `data/*` and binding-providing `core:*` module as `api`: both hosts then aggregate the same bindings, and a new data module is added there once.
+
+## Sync
+
+Data that the device keeps and refreshes is synced through `core:sync`. A data module says only how to sync, by contributing a `Syncable` into the Metro set; it never schedules work itself. `SyncEngine` runs every `Syncable` in parallel, lets overlapping requests share one run, and records `SyncOutcome.Failed` to `Monitor`.
+
+When sync runs is the engine's job:
+
+- **App launch** calls `SyncEngine.requestSync()`. On Android this enqueues unique one-time WorkManager work that needs a network connection, backs off on retry, and is expedited from Android 12 (earlier versions would need a foreground notification). On iOS it runs in the application scope and retries when `NetworkMonitor.isOnline` turns true, backing off from 30 seconds for at most five retries. On both, a new request replaces one still waiting to retry, so a retry button syncs right away.
+- **Daily**, a WorkManager periodic job on Android and a `BGAppRefreshTask` on iOS run the engine.
+- **Retry buttons** go through a concept's own interface, such as `CatalogSync.retry()`, because features cannot depend on `core:sync`.
 
 ## Design system
 
@@ -65,12 +75,18 @@ Previews use `@JalvioPreviews`, which includes a 320 dp phone at font scale 2. `
 Static network:
 
 ```text
-UI ← ViewModel ← CatalogRepository: Flow<T> ← Room DAOs
-                                  ↑ one transaction swap
-     CatalogRefresher ← api/catalog: GET /v1/catalog (If-None-Match), GET /v1/catalog/shapes
-                                  ↑
-     triggers: app launch, daily background task, connectivity regained after a failed refresh
+UI ← ViewModel ← CatalogRepository: Flow<T> ← catalog.db (Room, data:catalog)
+                                                ↑ one transaction swap
+     CatalogSyncable ← api/catalog: GET /v1/regions (If-None-Match)
+                                    GET /v1/regions/{region}/catalog
+                                    GET /v1/regions/{region}/catalog/shapes
+                                                ↑
+     SyncEngine ← triggers: app launch, daily background task, retry
 ```
+
+- The region list's `catalog.version` decides whether the catalog downloads; the catalog's `feedVersion` decides whether the shapes do. A failed or cancelled refresh leaves the stored catalog as it was. Switching region clears the old region's catalog first, and the switch finishes even if the screen that asked for it goes away.
+- The region is chosen automatically: the stored choice while it is still listed, the only region, or the one containing the rider's last known location. Otherwise `CatalogSync.status` asks with `ChooseRegion`. The choice lives in DataStore, so it survives a `catalog.db` reset.
+- `catalog.db` falls back destructively on a schema change; the next sync downloads again. User data stays in `jalvio.db`.
 
 Live data:
 

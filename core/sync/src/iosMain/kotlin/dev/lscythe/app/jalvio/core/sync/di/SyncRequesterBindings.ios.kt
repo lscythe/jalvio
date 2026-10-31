@@ -13,25 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.lscythe.app.jalvio.core.database
+package dev.lscythe.app.jalvio.core.sync.di
 
-import android.content.Context
-import androidx.room3.Room
-import androidx.room3.RoomDatabase
+import dev.lscythe.app.jalvio.core.sync.InProcessSyncRequester
+import dev.lscythe.app.jalvio.core.sync.SyncRequester
 import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.Binds
 import dev.zacsweers.metro.ContributesTo
-import dev.zacsweers.metro.Provides
-
-internal fun jalvioDatabaseBuilder(context: Context): RoomDatabase.Builder<JalvioDatabase> =
-    Room.databaseBuilder(context, context.getDatabasePath(DATABASE_FILE_NAME).absolutePath) {
-        JalvioDatabaseConstructor.initialize()
-    }
 
 @ContributesTo(AppScope::class)
-@BindingContainer
-object DatabaseBuilderBindings {
-    @Provides
-    fun provideBuilder(context: Context): RoomDatabase.Builder<JalvioDatabase> =
-        jalvioDatabaseBuilder(context)
+interface SyncRequesterBindings {
+    @Binds val InProcessSyncRequester.bind: SyncRequester
 }

@@ -41,9 +41,9 @@ Expected failures are values, modelled with arrow-core (`Either`, `Raise`, `ensu
 - Each concept has a sealed error type in its domain module. No shared catch-all error and no `Throwable` in signatures.
 - Room reads return `Flow<T>`. One-shot operations return `Either<E, T>`. Polling flows emit `Either<E, T>` per tick.
 - `data/*` and `api/*` catch exceptions at their edge with Arrow's `catch`, which rethrows `CancellationException`. Exceptions never leave a repository.
-- `api/*` maps HTTP status and the decoded RFC 9457 `Problem` to the concept's error.
+- `api/*` returns `ApiError` from `core:network` (`Unreachable`, `Malformed`, or `Http` with the status and the decoded RFC 9457 `Problem`), and `Fetched` for ETag-cached resources. `data/*` maps `ApiError` to the concept's error, because what a status means depends on the endpoint.
 - View models fold results into `UiState` or `Effect`. Arrow types never reach Compose code.
-- Unexpected failures go to `Monitor.recordError`.
+- Unexpected failures go to `Monitor.recordError`. Sync work reports them by returning `SyncOutcome.Failed` from its `Syncable`, and `core:sync` records them.
 
 ## Dependency injection
 

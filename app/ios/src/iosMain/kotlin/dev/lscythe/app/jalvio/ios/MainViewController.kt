@@ -17,16 +17,6 @@ package dev.lscythe.app.jalvio.ios
 
 import androidx.compose.ui.window.ComposeUIViewController
 import dev.lscythe.app.jalvio.JalvioApp
-import dev.lscythe.app.jalvio.core.common.environment.BuildEnvironment
-import dev.zacsweers.metro.createGraphFactory
-import kotlin.experimental.ExperimentalNativeApi
-import kotlin.native.Platform
 import platform.UIKit.UIViewController
 
-@OptIn(ExperimentalNativeApi::class)
-fun MainViewController(): UIViewController {
-    val environment =
-        if (Platform.isDebugBinary) BuildEnvironment.Debug else BuildEnvironment.Release
-    val graph = createGraphFactory<IosAppGraph.Factory>().create(environment)
-    return ComposeUIViewController { JalvioApp(graph) }
-}
+fun MainViewController(): UIViewController = ComposeUIViewController { JalvioApp(JalvioIos.graph) }

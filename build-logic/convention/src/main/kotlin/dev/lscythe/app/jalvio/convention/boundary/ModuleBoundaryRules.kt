@@ -32,7 +32,8 @@ private val featureImplCoreModules =
         "map",
         "analytics",
     )
-private val dataCoreModules = setOf("network", "database", "datastore", "location", "common")
+private val dataCoreModules =
+    setOf("network", "database", "datastore", "location", "sync", "common")
 
 fun boundaryViolations(dependencies: List<ModuleDependency>): List<String> =
     dependencies
