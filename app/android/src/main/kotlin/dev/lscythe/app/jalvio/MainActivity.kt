@@ -16,8 +16,8 @@
 package dev.lscythe.app.jalvio
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -26,7 +26,7 @@ import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.doOnPreDraw
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     private var systemSplashGone by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
