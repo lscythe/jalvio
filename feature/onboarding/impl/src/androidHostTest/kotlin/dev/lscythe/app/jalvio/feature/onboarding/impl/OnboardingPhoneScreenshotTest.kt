@@ -46,6 +46,18 @@ class OnboardingPhoneScreenshotTest(private val phone: Phone) {
             StillOnboarding(previewState(OnboardingStep.Language))
         }
 
+    @Test
+    fun privacy() =
+        composeRule.captureOnPhone("onboarding_privacy", phone) {
+            StillOnboarding(previewState(OnboardingStep.Privacy))
+        }
+
+    @Test
+    fun offline() =
+        composeRule.captureOnPhone("onboarding_offline", phone) {
+            StillOnboarding(previewState(OnboardingStep.Offline))
+        }
+
     companion object {
         @JvmStatic @Parameters(name = "{0}") fun phones() = Phone.parameters()
     }

@@ -16,18 +16,23 @@
 package dev.lscythe.app.jalvio.feature.onboarding.impl
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import dev.lscythe.app.jalvio.feature.onboarding.impl.component.DoubleTapGuard
+import dev.lscythe.app.jalvio.feature.onboarding.impl.content.AccountStep
 import dev.lscythe.app.jalvio.feature.onboarding.impl.content.CommunityStep
+import dev.lscythe.app.jalvio.feature.onboarding.impl.content.DoneStep
 import dev.lscythe.app.jalvio.feature.onboarding.impl.content.IndependentStep
 import dev.lscythe.app.jalvio.feature.onboarding.impl.content.LanguageStep
+import dev.lscythe.app.jalvio.feature.onboarding.impl.content.LocationStep
+import dev.lscythe.app.jalvio.feature.onboarding.impl.content.OfflineStep
+import dev.lscythe.app.jalvio.feature.onboarding.impl.content.PrivacyStep
 import dev.lscythe.app.jalvio.feature.onboarding.impl.content.WelcomeStep
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep
 
@@ -38,19 +43,27 @@ fun OnboardingScreen(
     onIntent: (OnboardingIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val exit = MaterialTheme.motionScheme.fastEffectsSpec<Float>()
+    val motion = MaterialTheme.motionScheme
     AnimatedContent(
         targetState = state.step,
         modifier = modifier.fillMaxSize(),
-        transitionSpec = { EnterTransition.None togetherWith fadeOut(exit) },
+        transitionSpec = {
+            fadeIn(motion.defaultEffectsSpec()) togetherWith fadeOut(motion.fastEffectsSpec())
+        },
         label = "onboarding step",
     ) { step ->
-        when (step) {
-            OnboardingStep.Welcome -> WelcomeStep(state, onIntent)
-            OnboardingStep.Community -> CommunityStep(state, onIntent)
-            OnboardingStep.Independent -> IndependentStep(onIntent)
-            OnboardingStep.Language -> LanguageStep(state, onIntent)
-            else -> Spacer(Modifier.fillMaxSize())
+        DoubleTapGuard {
+            when (step) {
+                OnboardingStep.Welcome -> WelcomeStep(state, onIntent)
+                OnboardingStep.Community -> CommunityStep(state, onIntent)
+                OnboardingStep.Independent -> IndependentStep(onIntent)
+                OnboardingStep.Language -> LanguageStep(state, onIntent)
+                OnboardingStep.Location -> LocationStep(onIntent)
+                OnboardingStep.Privacy -> PrivacyStep(state, onIntent)
+                OnboardingStep.Account -> AccountStep(onIntent)
+                OnboardingStep.Offline -> OfflineStep(state, onIntent)
+                OnboardingStep.Done -> DoneStep(onIntent)
+            }
         }
     }
 }

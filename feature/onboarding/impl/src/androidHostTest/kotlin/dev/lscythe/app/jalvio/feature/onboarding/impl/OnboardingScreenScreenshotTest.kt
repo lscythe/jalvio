@@ -32,7 +32,8 @@ import org.robolectric.annotation.GraphicsMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(qualifiers = LargestPhoneWindow)
 class OnboardingScreenScreenshotTest(
-    private val step: OnboardingStep,
+    private val name: String,
+    private val state: OnboardingUiState,
     private val dark: Boolean,
 ) {
     @get:Rule val composeRule = createComposeRule()
@@ -40,24 +41,21 @@ class OnboardingScreenScreenshotTest(
     @Test
     fun step() {
         val theme = if (dark) "dark" else "light"
-        composeRule.captureOnPhone("onboarding_${step.name.lowercase()}_$theme", Phone.Medium) {
-            StillOnboarding(previewState(step), dark)
+        composeRule.captureOnPhone("onboarding_${name}_$theme", Phone.Medium) {
+            StillOnboarding(state, dark)
         }
     }
 
     companion object {
         @JvmStatic
-        @Parameters(name = "{0} dark={1}")
-        fun steps(): List<Array<Any>> = ShownSteps.flatMap { step ->
-            listOf(false, true).map { arrayOf(step, it) }
+        @Parameters(name = "{0} dark={2}")
+        fun cases(): List<Array<Any>> {
+            val states =
+                OnboardingStep.entries.map { it.name.lowercase() to previewState(it) } +
+                    ("privacyfossfull" to fossFullPrivacyState())
+            return states.flatMap { (name, state) ->
+                listOf(arrayOf<Any>(name, state, false), arrayOf<Any>(name, state, true))
+            }
         }
-
-        private val ShownSteps =
-            listOf(
-                OnboardingStep.Welcome,
-                OnboardingStep.Community,
-                OnboardingStep.Independent,
-                OnboardingStep.Language,
-            )
     }
 }
