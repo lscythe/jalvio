@@ -39,6 +39,7 @@ android {
 dependencies {
     implementation(project(":app:shared"))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.work.runtime)
@@ -48,6 +49,8 @@ dependencies {
     "fossFullImplementation"(project(":core:monitoring-sentry"))
 
     testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.androidx.compose.ui.testJunit4)
+    debugImplementation(libs.androidx.compose.ui.testManifest)
 }
 
 dependencyGuard {

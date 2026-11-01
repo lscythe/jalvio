@@ -23,10 +23,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 
 val LocalReduceMotion: ProvidableCompositionLocal<Boolean> = staticCompositionLocalOf { false }
+
+val LocalScreenRevealed: ProvidableCompositionLocal<Boolean> = compositionLocalOf { true }
 
 internal val LocalJalvioColors = staticCompositionLocalOf {
     jalvioColors(jalvioColorScheme(ThemeSettings(), dark = false, platformScheme = null), false)

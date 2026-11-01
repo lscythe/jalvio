@@ -27,6 +27,11 @@ class Navigator(startKey: NavKey) {
         entries.add(key)
     }
 
+    fun resetTo(key: NavKey) {
+        entries.add(key)
+        entries.removeRange(0, entries.lastIndex)
+    }
+
     fun goBack(): Boolean {
         if (entries.size <= 1) return false
         entries.removeAt(entries.lastIndex)

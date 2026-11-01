@@ -47,6 +47,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":feature:<name>:api"))
             implementation(project(":domain:<concept>"))
+            implementation(project(":core:resources"))
         }
     }
 }
@@ -55,8 +56,9 @@ kotlin {
 The plugin adds Compose, Metro, `core:designsystem`, `core:navigation`, `core:ui`, Material 3, lifecycle and Metro view model support, `core:testing` to `commonTest`, and Robolectric, Roborazzi and `core:testing-screenshot` to `androidHostTest`.
 
 - Files follow the MVI layout in [code-style.md](code-style.md#feature-files).
-- The view model is contributed with `@ViewModelKey` and `@ContributesIntoMap(AppScope::class)`.
-- Add the `impl` to `app/shared` and wire its entry provider and navigation callbacks there.
+- Strings live in `core:resources`, which the plugin does not add; declare it as shown when the feature shows text.
+- The view model is contributed with `@ViewModelKey` and `@ContributesIntoMap(AppScope::class)`. A view model that keeps state in a `SavedStateHandle` is `@AssistedInject` instead, with a nested `@AssistedFactory` that implements `ViewModelAssistedFactory`, carries `@ViewModelAssistedFactoryKey` and `@ContributesIntoMap(AppScope::class)`, and builds the handle with `extras.createSavedStateHandle()`. The route then calls `assistedMetroViewModel()`.
+- Add the `impl` to `app/shared` as `api` and wire its entry provider and navigation callbacks there.
 - Tests: view model behaviour in `commonTest`, screenshots of the `Screen` in `androidHostTest`.
 
 ## Domain

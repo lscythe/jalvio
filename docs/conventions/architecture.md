@@ -46,7 +46,9 @@ Metro wires everything at compile time:
 
 - Implementations are `internal` and contributed with `@ContributesBinding(AppScope::class)` to a public interface.
 - Flavor-only modules replace defaults with `replaces = [...]`: `FirebaseAnalyticsHelper` replaces `NoOpAnalyticsHelper` and `SentryMonitor` replaces `KermitMonitor`.
-- `app/shared` declares `JalvioGraph` (the accessors) and the hosts declare the real graphs, `AndroidAppGraph` and `IosAppGraph`. Metro only sees contributions on the classpath where a graph is compiled, so compiling it per Android variant lets each distribution resolve its own replacements. For the same reason `app/shared` carries every `api/*`, `data/*` and binding-providing `core:*` module as `api`: both hosts then aggregate the same bindings, and a new data module is added there once.
+- Consent works the same way per flavor. `app/shared` provides `ConsentOptions.None` from `ConsentOptionsBindings` and a `NoOpConsentApplier`; the Play Store and FOSS Full source sets replace both with their own `ConsentOptions` and a `ConsentApplier` that turns Firebase collection and Sentry on or off. FOSS keeps the defaults, so it offers nothing and the privacy step is skipped.
+- Startup monitoring goes through `ConsentEnforcer`. Each host calls `consentEnforcer.start()` at launch; it follows the saved `PrivacyConsent` and hands every change to the `ConsentApplier`, so nothing is collected before the rider's choice is known.
+- `app/shared` declares `JalvioGraph` (the accessors) and the hosts declare the real graphs, `AndroidAppGraph` and `IosAppGraph`. Metro only sees contributions on the classpath where a graph is compiled, so compiling it per Android variant lets each distribution resolve its own replacements. For the same reason `app/shared` carries every `api/*`, `data/*`, `feature/*/impl` and binding-providing `core:*` module as `api`: both hosts then aggregate the same bindings, and a new module is added there once.
 
 ## Sync
 

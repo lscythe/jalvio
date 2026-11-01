@@ -34,7 +34,7 @@ class JalvioApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        initializeMonitoring(environment)
+        graph.consentEnforcer.start()
         graph.dailySync.schedule()
         graph.syncEngine.requestSync()
     }

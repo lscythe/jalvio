@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-internal val JalvioIcons.WordmarkLetters: ImageVector
+val JalvioIcons.WordmarkLetters: ImageVector
     get() {
         if (_WordmarkLetters != null) {
             return _WordmarkLetters!!

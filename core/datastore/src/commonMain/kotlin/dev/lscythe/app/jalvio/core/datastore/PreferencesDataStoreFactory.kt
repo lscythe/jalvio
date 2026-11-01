@@ -16,8 +16,10 @@
 package dev.lscythe.app.jalvio.core.datastore
 
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import okio.Path.Companion.toPath
@@ -30,6 +32,7 @@ internal fun createPreferencesDataStore(
     ioDispatcher: CoroutineDispatcher,
 ): DataStore<Preferences> =
     PreferenceDataStoreFactory.createWithPath(
+        corruptionHandler = ReplaceFileCorruptionHandler { emptyPreferences() },
         scope = CoroutineScope(applicationScope.coroutineContext + ioDispatcher),
         produceFile = { path.toPath() },
     )

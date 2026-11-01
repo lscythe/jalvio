@@ -25,6 +25,8 @@ private object StartKey : NavKey
 
 private object DetailKey : NavKey
 
+private object OtherKey : NavKey
+
 class NavigatorTest :
     BehaviorSpec({
         Given("a navigator at the start key") {
@@ -34,6 +36,16 @@ class NavigatorTest :
                 navigator.backStack shouldContainExactly listOf(StartKey, DetailKey)
                 navigator.goBack().shouldBeTrue()
                 navigator.backStack shouldContainExactly listOf(StartKey)
+            }
+        }
+        Given("a stack of two keys") {
+            val navigator = Navigator(StartKey).apply { navigate(DetailKey) }
+            When("resetTo(OtherKey)") {
+                navigator.resetTo(OtherKey)
+                Then("only OtherKey remains and goBack refuses") {
+                    navigator.backStack shouldContainExactly listOf(OtherKey)
+                    navigator.goBack().shouldBeFalse()
+                }
             }
         }
         Given("only the start key") {

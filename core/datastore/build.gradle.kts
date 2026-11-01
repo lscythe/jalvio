@@ -26,5 +26,6 @@ kotlin {
             api(libs.androidx.datastore.preferences.core)
             implementation(project(":core:common"))
         }
+        commonTest.dependencies { implementation(project(":core:testing")) }
     }
 }

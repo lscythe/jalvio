@@ -82,6 +82,18 @@ fun rememberJalvioTypography(): Typography {
 }
 
 @Composable
+fun rememberRobotoFlexFamily(weight: Int, width: Float): FontFamily {
+    val font =
+        Font(
+            resource = Res.font.roboto_flex,
+            weight = FontWeight(weight),
+            variationSettings =
+                FontVariation.Settings(FontVariation.weight(weight), FontVariation.width(width)),
+        )
+    return remember(font) { FontFamily(font) }
+}
+
+@Composable
 private fun robotoFlex(width: Float): FontFamily =
     FontFamily(
         Weights.map { weight ->

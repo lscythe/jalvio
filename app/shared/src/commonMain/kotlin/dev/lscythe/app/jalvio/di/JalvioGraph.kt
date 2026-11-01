@@ -15,16 +15,25 @@
  */
 package dev.lscythe.app.jalvio.di
 
+import dev.lscythe.app.jalvio.consent.ConsentEnforcer
 import dev.lscythe.app.jalvio.core.analytics.AnalyticsHelper
+import dev.lscythe.app.jalvio.core.map.MapStyleUrl
 import dev.lscythe.app.jalvio.core.monitoring.Monitor
 import dev.lscythe.app.jalvio.core.sync.SyncEngine
 import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
 import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
+import dev.lscythe.app.jalvio.domain.preferences.UserPreferencesRepository
+import dev.lscythe.app.jalvio.domain.preferences.model.ConsentOptions
+import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 
-interface JalvioGraph {
+interface JalvioGraph : ViewModelGraph {
+    val mapStyleUrl: MapStyleUrl
     val analyticsHelper: AnalyticsHelper
     val monitor: Monitor
     val syncEngine: SyncEngine
     val catalogSync: CatalogSync
     val catalogRepository: CatalogRepository
+    val userPreferencesRepository: UserPreferencesRepository
+    val consentOptions: ConsentOptions
+    val consentEnforcer: ConsentEnforcer
 }
