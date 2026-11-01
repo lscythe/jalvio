@@ -31,6 +31,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewModelSavedstate)
             implementation(libs.kotlinx.serialization.json)
         }
+        androidMain.dependencies { implementation(libs.compose.multiplatform.ui.tooling.preview) }
         commonTest.dependencies { implementation(libs.turbine) }
     }
 }
