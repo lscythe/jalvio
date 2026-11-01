@@ -13,6 +13,7 @@
     <string name="onboarding_get_started">Mulai</string>
     <string name="onboarding_skip">Lewati</string>
     <string name="onboarding_next">Berikutnya</string>
+    <string name="onboarding_back">Kembali</string>
     <string name="onboarding_continue">Lanjut</string>
     <string name="onboarding_community_title">Sesama penumpang saling kabarin.</string>
     <string name="onboarding_community_body">Kabarin seberapa penuh bus atau kondisi di halte. Dua ketukan, beres.</string>
@@ -46,6 +47,7 @@
     <string name="onboarding_privacy_crash_reports">Kirim laporan crash</string>
     <string name="onboarding_privacy_crash_reports_description">Detail teknis saat aplikasi crash, seperti model perangkat dan versi aplikasi. Tanpa lokasi, tanpa identitas.</string>
     <string name="onboarding_privacy_note">Bisa diubah kapan aja di Pengaturan → Privasi.</string>
+    <string name="onboarding_privacy_learn_more">Selengkapnya</string>
     <string name="onboarding_account_title">Pilih akunmu</string>
     <string name="onboarding_account_body">Google mencadangkan tempat dan perjalananmu serta menyinkronkannya antar perangkat. Akun lokal menyimpan semuanya di ponsel ini. Bisa diganti nanti.</string>
     <string name="onboarding_account_google">Lanjut dengan Google</string>

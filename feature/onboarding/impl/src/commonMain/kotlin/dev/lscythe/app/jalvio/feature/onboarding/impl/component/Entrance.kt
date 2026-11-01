@@ -21,12 +21,14 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import dev.lscythe.app.jalvio.core.designsystem.theme.LocalReduceMotion
+import dev.lscythe.app.jalvio.core.designsystem.theme.LocalScreenRevealed
 import kotlinx.coroutines.delay
 
 enum class EntranceKind {
@@ -46,45 +48,76 @@ object EntranceDelays {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
+fun rememberEntranceProgress(
+    delayMillis: Int = 0,
+    spec: FiniteAnimationSpec<Float> = MaterialTheme.motionScheme.slowSpatialSpec(),
+): State<Float> {
+    val reduceMotion = LocalReduceMotion.current
+    val revealed = LocalScreenRevealed.current
+    val progress = remember { Animatable(if (reduceMotion) 1f else 0f) }
+    LaunchedEffect(reduceMotion, revealed) {
+        if (reduceMotion) {
+            progress.snapTo(1f)
+        } else if (revealed) {
+            delay(delayMillis.toLong())
+            progress.animateTo(1f, spec)
+        }
+    }
+    return progress.asState()
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
 fun Modifier.entrance(
     kind: EntranceKind,
     delayMillis: Int = 0,
     spec: FiniteAnimationSpec<Float>? = null,
 ): Modifier {
-    val reduceMotion = LocalReduceMotion.current
     val motion = MaterialTheme.motionScheme
     val animationSpec =
         spec
-            ?: if (kind == EntranceKind.Fade) motion.defaultEffectsSpec()
-            else motion.slowSpatialSpec()
-    val progress = remember { Animatable(if (reduceMotion) 1f else 0f) }
-    LaunchedEffect(reduceMotion) {
-        if (reduceMotion) {
-            progress.snapTo(1f)
-        } else {
-            delay(delayMillis.toLong())
-            progress.animateTo(1f, animationSpec)
-        }
-    }
+            ?: when (kind) {
+                EntranceKind.Fade -> motion.defaultEffectsSpec()
+                EntranceKind.Up,
+                EntranceKind.Settle -> motion.defaultSpatialSpec()
+                EntranceKind.Grow -> motion.slowSpatialSpec()
+            }
+    val progress = rememberEntranceProgress(delayMillis, animationSpec)
     return graphicsLayer {
-        val value = progress.value
-        when (kind) {
-            EntranceKind.Up -> translationY = (1f - value) * RiseDistance.toPx()
-            EntranceKind.Fade -> alpha = value.coerceIn(0f, 1f)
-            EntranceKind.Grow -> {
-                scaleX = lerp(GrowFrom, 1f, value)
-                scaleY = scaleX
-                rotationZ = GrowTurn * (1f - value)
-            }
-            EntranceKind.Settle -> {
-                scaleX = lerp(SettleFrom, 1f, value)
-                scaleY = scaleX
-            }
-        }
+        val frame = entranceFrame(kind, progress.value)
+        alpha = frame.alpha
+        translationY = frame.rise * RiseDistance.toPx()
+        scaleX = frame.scale
+        scaleY = frame.scale
+        rotationZ = frame.rotation
+    }
+}
+
+internal data class EntranceFrame(
+    val alpha: Float,
+    val rise: Float = 0f,
+    val scale: Float = 1f,
+    val rotation: Float = 0f,
+)
+
+internal fun entranceAlpha(progress: Float): Float = progress.coerceIn(0f, 1f)
+
+internal fun entranceFrame(kind: EntranceKind, progress: Float): EntranceFrame {
+    val alpha = entranceAlpha(progress)
+    return when (kind) {
+        EntranceKind.Up -> EntranceFrame(alpha, rise = 1f - progress)
+        EntranceKind.Fade -> EntranceFrame(alpha)
+        EntranceKind.Grow ->
+            EntranceFrame(
+                alpha,
+                scale = lerp(GrowFrom, 1f, progress),
+                rotation = GrowTurn * (1f - progress),
+            )
+        EntranceKind.Settle -> EntranceFrame(alpha, scale = lerp(SettleFrom, 1f, progress))
     }
 }
 
 private val RiseDistance = 40.dp
-private const val GrowFrom = 0.2f
+private const val GrowFrom = 0f
 private const val GrowTurn = -60f
 private const val SettleFrom = 0.86f

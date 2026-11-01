@@ -32,4 +32,16 @@ class SpringHeadlineTest :
                 headlineAxes(0.5f) shouldBe HeadlineAxes(550, 70f)
             }
         }
+        Given("a headline whose longest word is wider than the screen at full size") {
+            val fitsUpTo = 61f
+            Then("it shrinks in 2 sp steps until the word fits") {
+                fittedHeadlineSize(76f, 28f) { it <= fitsUpTo } shouldBe 60f
+            }
+            Then("it keeps the full size when the word already fits") {
+                fittedHeadlineSize(52f, 28f) { it <= fitsUpTo } shouldBe 52f
+            }
+            Then("it stops at the minimum size when nothing fits") {
+                fittedHeadlineSize(76f, 28f) { false } shouldBe 28f
+            }
+        }
     })

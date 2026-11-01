@@ -18,6 +18,9 @@ package dev.lscythe.app.jalvio.feature.onboarding.impl.component
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshots.Snapshot
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.getBoundsInRoot
@@ -26,6 +29,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
 import dev.lscythe.app.jalvio.core.designsystem.theme.JalvioTheme
 import dev.lscythe.app.jalvio.core.designsystem.theme.LocalReduceMotion
+import dev.lscythe.app.jalvio.core.designsystem.theme.LocalScreenRevealed
 import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import org.junit.Rule
@@ -57,13 +61,29 @@ class EntranceTest {
         top() shouldBe 0.dp
     }
 
+    @Test
+    fun waitsBelowItsRestingPlaceUntilTheScreenIsRevealed() {
+        val revealed = mutableStateOf(false)
+        show(reduceMotion = false, revealed = revealed)
+
+        composeRule.mainClock.advanceTimeBy(2_000)
+        top() shouldBeGreaterThan 30.dp
+
+        Snapshot.withMutableSnapshot { revealed.value = true }
+        composeRule.mainClock.advanceTimeBy(2_000)
+        top() shouldBe 0.dp
+    }
+
     private fun top() = composeRule.onNodeWithTag(Tag).getBoundsInRoot().top
 
-    private fun show(reduceMotion: Boolean) {
+    private fun show(reduceMotion: Boolean, revealed: State<Boolean> = mutableStateOf(true)) {
         composeRule.mainClock.autoAdvance = false
         composeRule.setContent {
             JalvioTheme {
-                CompositionLocalProvider(LocalReduceMotion provides reduceMotion) {
+                CompositionLocalProvider(
+                    LocalReduceMotion provides reduceMotion,
+                    LocalScreenRevealed provides revealed.value,
+                ) {
                     Box(
                         Modifier.size(40.dp)
                             .entrance(EntranceKind.Up, delayMillis = EntranceDelays.Fifth)

@@ -13,6 +13,7 @@
     <string name="onboarding_get_started">Get started</string>
     <string name="onboarding_skip">Skip</string>
     <string name="onboarding_next">Next</string>
+    <string name="onboarding_back">Back</string>
     <string name="onboarding_continue">Continue</string>
     <string name="onboarding_community_title">Riders keep each other posted.</string>
     <string name="onboarding_community_body">Share how full a bus is or what’s up at a stop. Two taps, done.</string>
@@ -46,6 +47,7 @@
     <string name="onboarding_privacy_crash_reports">Send crash reports</string>
     <string name="onboarding_privacy_crash_reports_description">Technical details when the app crashes, like device model and app version. No location, no identity.</string>
     <string name="onboarding_privacy_note">You can change these anytime in Settings → Privacy.</string>
+    <string name="onboarding_privacy_learn_more">Learn more</string>
     <string name="onboarding_account_title">Choose your account</string>
     <string name="onboarding_account_body">Google backs up your places and trips and syncs them across devices. A local account keeps everything on this phone. You can switch later.</string>
     <string name="onboarding_account_google">Continue with Google</string>

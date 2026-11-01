@@ -22,7 +22,7 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -92,7 +92,7 @@ fun SquishButton(
         interactionSource = interactions,
         modifier =
             modifier
-                .height(height)
+                .heightIn(min = height)
                 .graphicsLayer {
                     scaleX = scale
                     scaleY = scale
@@ -101,7 +101,7 @@ fun SquishButton(
     ) {
         CompositionLocalProvider(LocalContentColor provides contentColor) {
             Row(
-                modifier = Modifier.padding(horizontal = contentPadding),
+                modifier = Modifier.padding(horizontal = contentPadding, vertical = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically,
                 content = content,

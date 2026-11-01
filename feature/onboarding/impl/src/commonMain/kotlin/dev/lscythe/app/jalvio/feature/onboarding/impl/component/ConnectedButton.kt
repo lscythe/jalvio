@@ -16,9 +16,12 @@
 package dev.lscythe.app.jalvio.feature.onboarding.impl.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,7 +41,10 @@ fun ConnectedButton(
     modifier: Modifier = Modifier,
     trailing: @Composable () -> Unit,
 ) {
-    Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Gap)) {
+    Row(
+        modifier.fillMaxWidth().height(IntrinsicSize.Min),
+        horizontalArrangement = Arrangement.spacedBy(Gap),
+    ) {
         SquishButton(
             onClick = onClick,
             corners = Corners.start(Outer, Inner),
@@ -47,7 +53,7 @@ fun ConnectedButton(
             contentColor = contentColor,
             height = Height,
             contentPadding = 28.dp,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).fillMaxHeight(),
         ) {
             Text(
                 label,
@@ -66,7 +72,7 @@ fun ConnectedButton(
             height = Height,
             pressedScale = 0.94f,
             contentPadding = 0.dp,
-            modifier = Modifier.width(Height),
+            modifier = Modifier.width(Height).fillMaxHeight(),
         ) {
             trailing()
         }

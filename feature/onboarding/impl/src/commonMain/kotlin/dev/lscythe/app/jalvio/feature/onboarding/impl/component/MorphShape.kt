@@ -69,18 +69,25 @@ class MorphShape(
 fun rememberMorph(from: RoundedPolygon, to: RoundedPolygon): Morph =
     remember(from, to) { Morph(from, to) }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 fun Modifier.morphBackground(
     morph: Morph,
     color: Color,
     progress: () -> Float,
     rotation: () -> Float = { 0f },
+): Modifier = cyclingBackground({ ShapeCycle(morph, progress()) }, color, rotation)
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+fun Modifier.cyclingBackground(
+    cycle: () -> ShapeCycle,
+    color: Color,
+    rotation: () -> Float = { 0f },
 ): Modifier = drawWithCache {
     val path = Path()
     val matrix = Matrix()
     onDrawBehind {
+        val frame = cycle()
         path.rewind()
-        morph.toPath(progress(), path)
+        frame.morph.toPath(frame.progress, path)
         matrix.reset()
         matrix.scale(size.width, size.height)
         path.transform(matrix)
@@ -88,11 +95,16 @@ fun Modifier.morphBackground(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 fun Modifier.polygonBackground(
     polygon: RoundedPolygon,
     color: Color,
     rotation: () -> Float = { 0f },
-): Modifier = morphBackground(Morph(polygon, polygon), color, progress = { 0f }, rotation)
+): Modifier = drawWithCache {
+    val path = Morph(polygon, polygon).toPath(0f)
+    path.transform(Matrix().apply { scale(size.width, size.height) })
+    onDrawBehind { rotate(rotation()) { drawPath(path, color) } }
+}
 
 class ShapeCycle(val morph: Morph, val progress: Float)
 

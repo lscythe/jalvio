@@ -34,9 +34,20 @@ kotlin {
     }
 }
 
+val resourcesWithLegacyIndonesianCode =
+    tasks.register<Sync>("resourcesWithLegacyIndonesianCode") {
+        from("src/commonMain/composeResources")
+        from("src/commonMain/composeResources/values-id") { into("values-in") }
+        into(layout.buildDirectory.dir("generated/resourcesWithLegacyIndonesianCode"))
+    }
+
 compose.resources {
     packageOfResClass = "dev.lscythe.app.jalvio.core.resources.generated.resources"
     publicResClass = true
+    customDirectory(
+        sourceSetName = "commonMain",
+        directoryProvider = layout.dir(resourcesWithLegacyIndonesianCode.map { it.destinationDir }),
+    )
 }
 
 val checkTranslations =
