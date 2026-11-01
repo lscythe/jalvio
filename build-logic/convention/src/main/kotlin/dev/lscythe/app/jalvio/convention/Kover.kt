@@ -41,13 +41,15 @@ private val appEntryPointClasses =
     listOf(
         "dev.lscythe.app.jalvio.JalvioApplication",
         "dev.lscythe.app.jalvio.MainActivity",
-        "dev.lscythe.app.jalvio.MonitoringKt",
         "dev.lscythe.app.jalvio.JalvioAppKt",
         "dev.lscythe.app.jalvio.ComposableSingletons\$JalvioAppKt",
     )
 
 private val platformAdapterClasses =
     listOf(
+        "dev.lscythe.app.jalvio.consent.FossFullConsentApplier",
+        "dev.lscythe.app.jalvio.consent.PlaystoreConsentApplier",
+        "dev.lscythe.app.jalvio.core.analytics.firebase.FirebaseAnalyticsCollectionKt",
         "dev.lscythe.app.jalvio.core.analytics.firebase.FirebaseAnalyticsHelper",
         "dev.lscythe.app.jalvio.core.common.dispatchers.PlatformIoDispatcher_androidKt",
         "dev.lscythe.app.jalvio.core.database.DatabasePathsKt",
@@ -61,6 +63,9 @@ private val platformAdapterClasses =
         "dev.lscythe.app.jalvio.core.sync.work.DailySync",
         "dev.lscythe.app.jalvio.core.sync.work.WorkManagerSyncRequester",
         "dev.lscythe.app.jalvio.core.ui.jank.ViewJankStateRecorder*",
+        "dev.lscythe.app.jalvio.data.preferences.AppCompatLanguageSettings",
+        "dev.lscythe.app.jalvio.data.preferences.UserDefaultsLanguageSettings",
+        "dev.lscythe.app.jalvio.navigation.MapScreenKt",
     )
 
 private val testSupportClasses = listOf("dev.lscythe.app.jalvio.core.testing.*")
