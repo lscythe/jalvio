@@ -58,6 +58,7 @@ fun ComposeContentTestRule.captureOnPhone(
     content: @Composable () -> Unit,
 ) {
     mainClock.autoAdvance = false
+    releaseEarlierNativeGraphics()
     setContent {
         val density = LocalDensity.current.density
         CompositionLocalProvider(LocalDensity provides Density(density, phone.fontScale)) {
@@ -72,4 +73,11 @@ fun ComposeContentTestRule.captureOnPhone(
     onNodeWithTag(PhoneTag).captureScreenshot("${name}_${phone.suffix}")
 }
 
+private fun releaseEarlierNativeGraphics() =
+    repeat(NativeReleasePasses) {
+        System.gc()
+        System.runFinalization()
+    }
+
 private const val PhoneTag = "phone"
+private const val NativeReleasePasses = 3
