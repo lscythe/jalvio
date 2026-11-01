@@ -24,6 +24,7 @@ import dev.lscythe.app.jalvio.core.sync.di.SyncBindings
 import dev.lscythe.app.jalvio.domain.catalog.CatalogRepository
 import dev.lscythe.app.jalvio.domain.catalog.CatalogSync
 import dev.lscythe.app.jalvio.domain.preferences.model.ConsentOptions
+import dev.lscythe.app.jalvio.feature.onboarding.impl.OnboardingViewModel
 import dev.zacsweers.metro.createGraphFactory
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
@@ -45,6 +46,15 @@ class FossGraphTest {
 
         graph.analyticsHelper.shouldBeInstanceOf<NoOpAnalyticsHelper>()
         graph.monitor.shouldBeInstanceOf<KermitMonitor>()
+    }
+
+    @Test
+    fun theOnboardingViewModelIsBound() {
+        val graph =
+            createGraphFactory<AndroidAppGraph.Factory>()
+                .create(RuntimeEnvironment.getApplication(), BuildEnvironment.Debug)
+
+        graph.assistedFactoryProviders.keys shouldContain OnboardingViewModel::class
     }
 
     @Test

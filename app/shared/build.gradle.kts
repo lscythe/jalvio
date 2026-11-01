@@ -18,6 +18,7 @@ plugins {
     alias(libs.plugins.jalvio.multiplatform.library.compose)
     alias(libs.plugins.jalvio.metro)
     alias(libs.plugins.jalvio.endpoints)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -39,10 +40,17 @@ kotlin {
             api(project(":data:preferences"))
             api(project(":domain:catalog"))
             api(project(":domain:preferences"))
+            api(project(":feature:onboarding:api"))
+            api(project(":feature:onboarding:impl"))
             api(libs.compose.multiplatform.runtime)
+            api(libs.metro.viewmodel)
             implementation(project(":core:designsystem"))
+            implementation(project(":core:navigation"))
+            implementation(libs.androidx.lifecycle.viewModelNavigation3)
             implementation(libs.compose.multiplatform.foundation)
             implementation(libs.compose.multiplatform.material3)
+            implementation(libs.jetbrains.navigation3.ui)
+            implementation(libs.metro.viewmodel.compose)
         }
         commonTest.dependencies { implementation(project(":core:testing")) }
     }
