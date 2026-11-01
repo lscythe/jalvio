@@ -49,6 +49,7 @@ androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", versi
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidxDatastore" }
 androidx-lifecycle-runtimeCompose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewModelSavedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidxLifecycle" }
 androidx-metrics = { module = "androidx.metrics:metrics-performance", version.ref = "androidxMetrics" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "androidxNavigation3" }
 androidx-navigationevent-compose = { module = "androidx.navigationevent:navigationevent-compose", version.ref = "androidxNavigationevent" }

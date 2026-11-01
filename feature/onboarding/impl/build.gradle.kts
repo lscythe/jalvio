@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins { alias(libs.plugins.jalvio.multiplatform.feature.impl) }
+plugins {
+    alias(libs.plugins.jalvio.multiplatform.feature.impl)
+    alias(libs.plugins.kotlin.serialization)
+}
 
 kotlin {
     android { namespace = "dev.lscythe.app.jalvio.feature.onboarding.impl" }
@@ -25,6 +28,8 @@ kotlin {
             implementation(project(":core:permissions"))
             implementation(project(":core:resources"))
             implementation(libs.androidx.navigationevent.compose)
+            implementation(libs.androidx.lifecycle.viewModelSavedstate)
+            implementation(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies { implementation(libs.turbine) }
     }

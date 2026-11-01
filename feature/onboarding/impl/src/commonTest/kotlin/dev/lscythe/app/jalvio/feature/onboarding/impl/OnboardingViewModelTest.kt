@@ -15,6 +15,7 @@
  */
 package dev.lscythe.app.jalvio.feature.onboarding.impl
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import dev.lscythe.app.jalvio.core.permissions.PermissionStatus
 import dev.lscythe.app.jalvio.core.testing.MainDispatcherExtension
@@ -30,12 +31,14 @@ import dev.lscythe.app.jalvio.feature.onboarding.impl.OnboardingIntent.Next
 import dev.lscythe.app.jalvio.feature.onboarding.impl.OnboardingIntent.SelectCrowd
 import dev.lscythe.app.jalvio.feature.onboarding.impl.OnboardingIntent.SelectLanguage
 import dev.lscythe.app.jalvio.feature.onboarding.impl.OnboardingIntent.SetPrivacy
+import dev.lscythe.app.jalvio.feature.onboarding.impl.OnboardingIntent.SetWifiOnly
 import dev.lscythe.app.jalvio.feature.onboarding.impl.OnboardingIntent.SkipIntro
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.CrowdOptionUi
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep.Account
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep.Community
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep.Done
+import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep.Independent
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep.Language
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep.Location
 import dev.lscythe.app.jalvio.feature.onboarding.impl.model.OnboardingStep.Privacy
@@ -56,14 +59,22 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 
+@OptIn(ExperimentalCoroutinesApi::class)
 private class OnboardingHarness(
-    options: ConsentOptions,
-    consent: PrivacyConsent,
+    private val options: ConsentOptions,
     private val scope: TestScope,
+    val preferences: FakeUserPreferencesRepository,
+    private val savedState: SavedStateHandle = SavedStateHandle(),
 ) {
-    val preferences = FakeUserPreferencesRepository(consent)
     val languages = FakeLanguageSettings(AppLanguage.English)
-    val viewModel = OnboardingViewModel(preferences, languages, options)
+    val viewModel = OnboardingViewModel(savedState, preferences, languages, options)
+
+    init {
+        scope.backgroundScope.launch(UnconfinedTestDispatcher(scope.testScheduler)) {
+            viewModel.state.collect {}
+        }
+        scope.runCurrent()
+    }
 
     val state
         get() = viewModel.state.value
@@ -76,20 +87,19 @@ private class OnboardingHarness(
     fun goTo(step: OnboardingStep) {
         while (state.step != step) send(Next)
     }
+
+    fun afterProcessDeath(): OnboardingHarness {
+        val restored = SavedStateHandle(savedState.keys().associateWith { savedState.get<Any>(it) })
+        return OnboardingHarness(options, scope, preferences, restored)
+    }
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
 private fun onboardingTest(
     options: ConsentOptions = playstoreOptions,
     consent: PrivacyConsent = PrivacyConsent(analytics = true, crashReports = true),
     body: suspend OnboardingHarness.() -> Unit,
 ) = runTest {
-    val harness = OnboardingHarness(options, consent, this)
-    backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
-        harness.viewModel.state.collect {}
-    }
-    runCurrent()
-    harness.body()
+    OnboardingHarness(options, this, FakeUserPreferencesRepository(consent)).body()
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -120,6 +130,29 @@ class OnboardingViewModelTest :
                         send(Back)
                         state.step shouldBe Community
                     }
+                }
+            }
+        }
+        Given("a rider partway through onboarding") {
+            When("the app process is killed and restored") {
+                Then("the step history, crowd pick and Wi-Fi choice come back") {
+                    onboardingTest {
+                        send(Next, SelectCrowd(CrowdOptionUi.Packed), Next, Next)
+                        send(SetWifiOnly(false))
+
+                        val restored = afterProcessDeath()
+
+                        restored.state.step shouldBe Language
+                        restored.state.crowd shouldBe CrowdOptionUi.Packed
+                        restored.state.wifiOnly.shouldBeFalse()
+                        restored.send(Back)
+                        restored.state.step shouldBe Independent
+                    }
+                }
+            }
+            When("the process is restored before anything changed") {
+                Then("the rider starts on Welcome") {
+                    onboardingTest { afterProcessDeath().state.step shouldBe Welcome }
                 }
             }
         }
@@ -162,6 +195,43 @@ class OnboardingViewModelTest :
                         goTo(Location)
                         send(LocationAnswered(PermissionStatus.Granted))
                         state.step shouldBe Privacy
+                    }
+                }
+            }
+            When("Allow location is tapped twice before the dialog answers") {
+                Then("the permission is requested once") {
+                    onboardingTest {
+                        goTo(Location)
+                        viewModel.effects.test {
+                            send(AllowLocation, AllowLocation)
+                            awaitItem() shouldBe OnboardingEffect.RequestLocationPermission
+                            expectNoEvents()
+                        }
+                    }
+                }
+            }
+            When("a second answer arrives after the rider reached Privacy") {
+                Then("the rider stays on Privacy") {
+                    onboardingTest {
+                        goTo(Location)
+                        send(
+                            LocationAnswered(PermissionStatus.Denied),
+                            LocationAnswered(PermissionStatus.Granted),
+                        )
+                        state.step shouldBe Privacy
+                    }
+                }
+            }
+            When("the rider comes back to Location after answering") {
+                Then("allowing location asks again") {
+                    onboardingTest {
+                        goTo(Location)
+                        viewModel.effects.test {
+                            send(AllowLocation)
+                            awaitItem()
+                            send(LocationAnswered(PermissionStatus.Denied), Back, AllowLocation)
+                            awaitItem() shouldBe OnboardingEffect.RequestLocationPermission
+                        }
                     }
                 }
             }
